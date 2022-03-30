@@ -26,3 +26,7 @@ class Home_Page_Locators:
     TWITTER_URL = "https://twitter.com/saucelabs"
     FACEBOOK_URL = "https://www.facebook.com/saucelabs"
     LINKEDIN_URL = "https://www.linkedin.com/company/sauce-labs/"
+
+    #Burger Button
+    ABOUT_PAGE = (By.ID, "about_sidebar_link")
+    ABOUT_PAGE_URL = "https://saucelabs.com/"
