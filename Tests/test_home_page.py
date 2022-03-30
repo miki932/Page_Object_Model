@@ -4,7 +4,6 @@ from Locators import home_page_locators as home_locator
 
 
 class Test_Home(Base_Test):
-
     def test_twitter_logo(self):
         self.home_page = Home_Page(self.driver)
         self.home_page.click(home_locator.TWITTER_LOGO)

@@ -2,6 +2,7 @@ from Config.config import Test_Data
 from Pages.base_page import Base_Page
 from Locators import login_page_locators as locator
 
+
 class Login_Page(Base_Page):
 
     # It is necessary to initialize the driver as a page class member for implement Page Factory.

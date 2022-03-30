@@ -6,11 +6,10 @@ from Config import config
 
 
 class Test_Login(Base_Test):
-
     def test_signup_link_visible(self):
         self.login_page = Login_Page(self.driver)
         flag = self.login_page.is_signup_link_visible()
-        assert flag #boolian
+        assert flag  # boolian
 
     def test_login_page_title(self):
         self.login_page = Login_Page(self.login_page)
