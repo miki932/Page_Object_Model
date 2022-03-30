@@ -1,6 +1,6 @@
 from Pages.base_page import Base_Page
 from Config.config import Test_Data
-from Locators import home_page_locators as home_locator
+from Locators.home_page_locators import Home_Page_Locators as home_locator
 from selenium.webdriver.support.ui import Select
 
 
@@ -18,3 +18,6 @@ class Home_Page(Base_Page):
 
     def go_to_cart(self, by_locator):
         self.click(by_locator)
+
+    def go_to_about_page(self):
+        self.click(home_locator.BURGER_MENU)
