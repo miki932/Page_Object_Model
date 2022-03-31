@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from seleniumpagefactory.Pagefactory import PageFactory
+from Config.config import Test_Data
 
 
 class Base_Page(PageFactory):
@@ -36,32 +37,33 @@ class Base_Page(PageFactory):
 
     def click(self, by_locator):
         """Performs click on web element whose locator is passed to it"""
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, Test_Data.TIMEOUT).until(
             EC.visibility_of_element_located(by_locator)
         ).click()
 
     def send_text(self, by_locator, text):
         """Performs text entry of the passed in text, in a web element whose locator is passed to it"""
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, Test_Data.TIMEOUT).until(
             EC.visibility_of_element_located(by_locator)
         ).send_keys(text)
 
     def get_title(self, title) -> str:
         """Returns the title of the page"""
-        WebDriverWait(self.driver, 10).until(EC.title_is(title))
+        WebDriverWait(self.driver, Test_Data.TIMEOUT).until(
+            EC.title_is(title))
         return self.driver.title
 
     def get_element(self, by_locator) -> str:
-        element = WebDriverWait(self, 10).until(
+        element = WebDriverWait(self, Test_Data.TIMEOUT).until(
             EC.visibility_of_element_located(by_locator)
         )
         return element.text
 
-    def is_visible(self, by_locator):
-        element = WebDriverWait(self, 10).until(
+    def is_visible(self, by_locator) -> bool:
+        element = WebDriverWait(self, Test_Data.TIMEOUT).until(
             EC.visibility_of_element_located(by_locator)
         )
         return bool(element)
 
-    def get_url(self):
+    def get_url(self) -> str:
         return self.driver.current_url()

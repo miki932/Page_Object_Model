@@ -5,3 +5,4 @@ class Test_Data:
     USER_NAME = "standard_user"
     INVALID_USER_NAME = "bad_user"
     PASSWORD = "secret_sauce"
+    TIMEOUT = 10
