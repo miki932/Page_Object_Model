@@ -1,7 +1,7 @@
 from Tests.test_base import Base_Test
 from Pages.home_page import Home_Page
 from Locators.home_page_locators import Home_Page_Locators as home_locator
-
+from Config.config import Test_Data
 
 class Test_Home(Base_Test):
 
@@ -35,3 +35,7 @@ class Test_Home(Base_Test):
     def test_go_to_about_page(self):
         self.home_page.go_to_about_page()
         assert self.home_page.get_url() == home_locator.ABOUT_PAGE_URL
+
+    def test_logout_btn(self):
+        self.home_page.go_to_logout()
+        assert self.get_url() == Test_Data.BASE_URL
