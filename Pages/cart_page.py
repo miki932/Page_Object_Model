@@ -13,8 +13,5 @@ class Cart_Page(Base_Page):
     def checkout(self):
         self.click(Cart_Page_Locators.CHECKOUT_BTN)
 
-    def get_items(self):
-        pass
-
-    def remove(self, item):
-        pass
+    def remove(self):
+        self.click(Cart_Page_Locators.REMOVE_BTN)
