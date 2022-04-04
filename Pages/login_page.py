@@ -1,6 +1,6 @@
 from Config.config import Test_Data
 from Pages.base_page import Base_Page
-from Locators import login_page_locators as locator
+from Locators.login_page_locators import Login_Locators
 
 
 class Login_Page(Base_Page):
@@ -18,6 +18,11 @@ class Login_Page(Base_Page):
         return self.is_visible(self.SIGNUP_LINK)
 
     def do_login(self, username, password):
-        self.send_text(locator.EMAIL, username)
-        self.send_text(locator.PASSWORD, password)
-        self.click(locator.LOGIN_BUTTON)
+        self.send_text(Login_Locators.EMAIL, username)
+        self.send_text(Login_Locators.PASSWORD, password)
+        self.click(Login_Locators.LOGIN_BUTTON)
+
+    def invalid_login(self, username, invalid_password):
+        self.send_text(Login_Locators.EMAIL, username)
+        self.send_text(Login_Locators.PASSWORD, invalid_password)
+        self.click(Login_Locators.LOGIN_BUTTON)

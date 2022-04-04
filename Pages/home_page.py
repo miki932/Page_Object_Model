@@ -22,3 +22,7 @@ class Home_Page(Base_Page):
     def go_to_about_page(self):
         self.click(home_locator.BURGER_MENU)
         self.click(home_locator.ABOUT_PAGE)
+
+    def go_to_logout(self):
+        self.click(home_locator.BURGER_MENU)
+        self.click(home_locator.LOGOUT_BTN)

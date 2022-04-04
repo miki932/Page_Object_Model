@@ -8,9 +8,9 @@ import pytest
 @pytest.fixture(params=["chrome", "firefox"], scope="class")
 def init_driver(request):
     if request.params == "chrome":
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))
     if request.params == "firefox":
-        driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+        driver = webdriver.Firefox(service=Service(executable_path=GeckoDriverManager().install()))
     request.cls.driver = driver
     yield
     driver.close()

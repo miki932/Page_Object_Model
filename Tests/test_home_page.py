@@ -1,6 +1,6 @@
 from Tests.test_base import Base_Test
 from Pages.home_page import Home_Page
-from Locators import home_page_locators as home_locator
+from Locators.home_page_locators import Home_Page_Locators as home_locator
 
 
 class Test_Home(Base_Test):
@@ -9,7 +9,7 @@ class Test_Home(Base_Test):
         self.home_page = Home_Page(self.driver)
 
     def test_twitter_logo(self):
-        self.home_page.click(home_locator.TWITTER_LOGO)
+        self.home_page.click()
         assert self.home_page.get_url() == home_locator.TWITTER_URL
 
     def test_facebook_logo(self):
@@ -34,4 +34,4 @@ class Test_Home(Base_Test):
 
     def test_go_to_about_page(self):
         self.home_page.go_to_about_page()
-        assert self.home_page.get_url() == home_locator.HOME_PAGE_URL
+        assert self.home_page.get_url() == home_locator.ABOUT_PAGE_URL
