@@ -17,24 +17,6 @@ class Base_Page(PageFactory):
         """This function is called every time a new object of the base class is created"""
         self.driver = driver
 
-    def __set__(self, obj, value):
-        """Sets the text to the value supplied"""
-        driver = obj.driver
-        WebDriverWait(driver, 100).until(
-            lambda driver: driver.find_element_by_id(self.locator)
-        )
-        driver.find_element_by_id(self.locator).clear()
-        driver.find_element_by_id(self.locator).send_keys(value)
-
-    def __get__(self, obj, owner):
-        """Gets the text of the specified object"""
-        driver = obj.driver
-        WebDriverWait(driver, 100).until(
-            lambda driver: driver.find_element_by_id(self.locator)
-        )
-        element = driver.find_element_by_id(self.locator)
-        return element.get_attribute("value")
-
     def click(self, by_locator):
         """Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, Test_Data.TIMEOUT).until(
