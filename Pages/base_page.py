@@ -12,7 +12,6 @@ class Base_Page(PageFactory):
     I'm inherit from `selenium-page-factory.PageFactory` which is a simple Python library
     that provides page factory approach to implement page object model in selenium.
     """
-
     def __init__(self, driver):
         """This function is called every time a new object of the base class is created"""
         self.driver = driver
