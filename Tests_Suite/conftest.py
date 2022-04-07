@@ -10,11 +10,14 @@ import pytest
 def init_driver(request):
     #options = Options()
     #options.add_argument("--headless")
-    if request.params == "chrome":
+    global driver
+    print("------Setup driver------")
+    if request.param == "chrome":
         driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))#add here chrome_options=options
         request.cls.driver = driver
-    if request.params == "firefox":
+    if request.param == "firefox":
         driver = webdriver.Firefox(service=Service(executable_path=GeckoDriverManager().install()))
         request.cls.driver = driver
     yield
+    print("------Tear Down------")
     driver.close()

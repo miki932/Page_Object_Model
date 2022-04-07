@@ -1,17 +1,17 @@
-from Pages.base_page import Base_Page
-from Locators.cart_page_locators import Cart_Page_Locators
+from Pages.base_page import BasePage
+from Locators.cart_page_locators import CartPageLocators
 
 
-class Cart_Page(Base_Page):
+class CartPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver.get(Cart_Page_Locators.CART_PAGE_URL)
+        self.driver.get(CartPageLocators.CART_PAGE_URL)
 
     def continue_shopping(self):
-        self.click(Cart_Page_Locators.CONTINUE_SHOPPING_BTN)
+        self.click(CartPageLocators.CONTINUE_SHOPPING_BTN)
 
     def checkout(self):
-        self.click(Cart_Page_Locators.CHECKOUT_BTN)
+        self.click(CartPageLocators.CHECKOUT_BTN)
 
     def remove(self):
-        self.click(Cart_Page_Locators.REMOVE_BTN)
+        self.click(CartPageLocators.REMOVE_BTN)

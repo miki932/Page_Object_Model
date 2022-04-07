@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class Cart_Page_Locators:
+class CartPageLocators:
     # Object Repository:
     CART_PAGE_URL = 'https://www.saucedemo.com/cart.html'
     CHECKOUT_BTN = (By.ID, 'cart')

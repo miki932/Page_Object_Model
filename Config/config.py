@@ -1,4 +1,4 @@
-class Test_Data:
+class TestData:
 
     BASE_URL = "https://www.saucedemo.com/"
     HOME_PAGE_URL = "https://www.saucedemo.com/inventory.html"

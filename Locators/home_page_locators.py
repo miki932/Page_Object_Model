@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class Home_Page_Locators:
+class HomePageLocators:
     # Object Repository:
 
     # Header

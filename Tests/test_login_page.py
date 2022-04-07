@@ -1,13 +1,13 @@
-from Pages.login_page import Login_Page
-from Tests.test_base import Base_Test
-from Locators.login_page_locators import Login_Locators
-from Config.config import Test_Data
+from Pages.login_page import LoginPage
+from Tests.test_base import BaseTest
+from Locators.login_page_locators import LoginLocators
+from Config.config import TestData
 
 
-class Test_Login(Base_Test):
+class Test_Login(BaseTest):
 
     def __init__(self):
-        self.login_page = Login_Page(self.driver)
+        self.login_page = LoginPage(self.driver)
 
     def test_signup_link_visible(self):
         flag = self.login_page.is_signup_link_visible()
@@ -15,12 +15,12 @@ class Test_Login(Base_Test):
 
     def test_login_page_title(self):
         title = self.login_page.get_title()
-        assert title == Test_Data.LOGIN_PAGE_TITLE
+        assert title == TestData.LOGIN_PAGE_TITLE
 
     def go_to_home_page(self):
-        self.login_page.do_login(Test_Data.USER_NAME, Test_Data.PASSWORD)
-        assert self.login_page.get_url() == Test_Data.HOME_PAGE_URL
+        self.login_page.do_login(TestData.USER_NAME, TestData.PASSWORD)
+        assert self.login_page.get_url() == TestData.HOME_PAGE_URL
 
     def test_invalid_login(self):
-        self.login_page.do_login(Test_Data.INVALID_USER_NAME, Login_Locators.INVALID_PASSWORD)
-        assert self.login_page.is_visible(Login_Locators.ERROR_MESSAGE)
+        self.login_page.do_login(TestData.INVALID_USER_NAME, LoginLocators.INVALID_PASSWORD)
+        assert self.login_page.is_visible(LoginLocators.ERROR_MESSAGE)
