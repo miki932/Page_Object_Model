@@ -13,7 +13,7 @@ class BasePage(PageFactory):
     that provides page factory approach to implement page object model in selenium.
     """
     def __init__(self, driver):
-        """This function is called every time a new object of the base class is created"""
+        """This function is called every time a new object of the base class that created"""
         super().__init__()
         self.driver = driver
 
