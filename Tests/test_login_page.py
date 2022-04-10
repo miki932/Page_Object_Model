@@ -5,7 +5,6 @@ from Config.config import TestData
 
 
 class Test_Login(BaseTest):
-
     def __init__(self):
         self.login_page = LoginPage(self.driver)
 

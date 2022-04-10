@@ -5,7 +5,6 @@ from Config.config import TestData
 
 
 class TestHome(BaseTest):
-
     def __init__(self):
         self.home_page = HomePage(self.driver)
 

@@ -4,7 +4,6 @@ from Locators.login_page_locators import LoginLocators
 
 
 class LoginPage(BasePage):
-
     # It is necessary to initialize the driver as a page class member for implement Page Factory.
     def __init__(self, driver):
         super().__init__(driver)
