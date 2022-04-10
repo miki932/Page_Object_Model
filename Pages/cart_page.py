@@ -7,6 +7,7 @@ class CartPage(BasePage):
         super().__init__(driver)
         self.driver.get(CartPageLocators.CART_PAGE_URL)
 
+    # Page Actions:
     def continue_shopping(self):
         self.click(CartPageLocators.CONTINUE_SHOPPING_BTN)
 

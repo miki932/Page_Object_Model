@@ -9,6 +9,7 @@ class HomePage(BasePage):
         super().__init__(driver)
         self.driver.get(TestData.HOME_PAGE_URL)
 
+    # Page Actions:
     def add_to_cart(self, by_locator):
         self.click(by_locator)
 

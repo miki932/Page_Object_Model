@@ -50,5 +50,3 @@ class HomePageLocators:
     ABOUT_PAGE = (By.ID, "about_sidebar_link")
     ABOUT_PAGE_URL = "https://saucelabs.com/"
     LOGOUT_BTN = (By.ID, "logout_sidebar_link")
-
-    
