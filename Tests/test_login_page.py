@@ -16,7 +16,7 @@ class Test_Login(BaseTest):
         title = self.login_page.get_title()
         assert title == TestData.LOGIN_PAGE_TITLE
 
-    def go_to_home_page(self):
+    def go_to_home_page(self) -> object:
         self.login_page.do_login(TestData.USER_NAME, TestData.PASSWORD)
         assert self.login_page.get_url() == TestData.HOME_PAGE_URL
 
