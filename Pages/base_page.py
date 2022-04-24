@@ -47,5 +47,5 @@ class BasePage(PageFactory):
         )
         return bool(element)
 
-    def get_url(self) -> str:
-        return self.driver.current_url()
+    def get_url(self):
+        return self.driver.current_url
