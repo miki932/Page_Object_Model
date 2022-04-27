@@ -13,9 +13,6 @@ class LoginPage(BasePage):
     def get_login_title(self, title):
         return self.get_title(title)
 
-    def is_signup_link_visible(self):
-        return self.is_visible(self.SIGNUP_LINK)
-
     def do_login(self, username, password):
         self.send_text(LoginLocators.EMAIL, username)
         self.send_text(LoginLocators.PASSWORD, password)

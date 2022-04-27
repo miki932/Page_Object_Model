@@ -36,16 +36,16 @@ class BasePage(PageFactory):
         return self.driver.title
 
     def get_element(self, by_locator) -> str:
-        element = WebDriverWait(self, TestData.TIMEOUT).until(
+        element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.visibility_of_element_located(by_locator)
         )
         return element.text
 
-    def is_visible(self, by_locator) -> bool:
-        element = WebDriverWait(self, TestData.TIMEOUT).until(
+    def is_visible(self, by_locator):
+        element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.visibility_of_element_located(by_locator)
         )
         return bool(element)
 
-    def get_url(self):
+    def get_url(self) -> str:
         return self.driver.current_url
