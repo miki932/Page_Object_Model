@@ -5,8 +5,14 @@ from Config.config import TestData
 
 
 class TestHome(BaseTest):
-    def __init__(self):
+    def __init__(self, driver):
+        super().__init__(driver)
         self.home_page = HomePage(self.driver)
+
+    def do_login_and_go_to_home_page(self):
+        self.home_page.do_login(TestData.USER_NAME, TestData.PASSWORD)
+        current_url = self.home_page.get_url()
+        assert current_url == TestData.HOME_PAGE_URL
 
     def test_twitter_logo(self):
         self.home_page.click()
