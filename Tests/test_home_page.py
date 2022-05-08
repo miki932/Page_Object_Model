@@ -1,16 +1,19 @@
-from Tests.test_base import BaseTest
+from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
 from Config.config import TestData
+from Pages.login_page import LoginPage
 
 
-class TestHome(BaseTest):
+class TestHome(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.home_page = HomePage(self.driver)
+        self.driver.get(TestData.BASE_URL)
 
-    def do_login_and_go_to_home_page(self):
+    def do_login_and_go_to_home_page_1(self):
         self.home_page.do_login(TestData.USER_NAME, TestData.PASSWORD)
+        self.home_page = HomePage(self.driver)
         current_url = self.home_page.get_url()
         assert current_url == TestData.HOME_PAGE_URL
 

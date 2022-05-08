@@ -11,7 +11,7 @@ import os
 @pytest.fixture(params=["chrome", "firefox"], scope="class")
 def init_driver(request):
     options = Chrome_Options()
-    options.headless = False
+    options.headless = True
     global driver
     print("------Setup driver------")
     if request.param == "chrome":
@@ -27,12 +27,10 @@ def init_driver(request):
     print("------Tear Down------")
     driver.close()
 
-
 # fixture to automatically open the generated HTML Report in a browser.
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config):
     config._htmlfile = config._html.logfile
-
 
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session):
