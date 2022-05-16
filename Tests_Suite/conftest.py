@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options as Chrome_Options
 from selenium.webdriver.firefox.options import Options as Firefox_Options
+from dotenv import load_dotenv
 import pytest
 import os
 
@@ -37,3 +38,10 @@ def pytest_sessionfinish(session):
     file = session.config._htmlfile
     # invoke the file opening in external tool
     os.system('open ' + file)
+
+"""
+
+load_dotenv()
+sauce_username = os.environ["SAUCE_USERNAME"]
+sauce_access_key = os.environ["SAUCE_ACCESS_KEY"]
+"""
