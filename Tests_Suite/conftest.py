@@ -15,6 +15,29 @@ def init_driver(request):
     options.headless = True
     global driver
     print("------Setup driver------")
+    """
+    #If we want to run our test on Selenium Grid via some cloud service:
+    sauce_username = os.environ["SAUCE_USERNAME"]
+    sauce_access_key = os.environ["SAUCE_ACCESS_KEY"]
+    remote_url = f"http://{sauce_username}:{sauce_access_key}@ondemand.saucelabs.com/wd/hub"
+    sauceOptions = {
+        "screenResolution": "1280x768",
+        "platformName": "Windows 10",
+        "browserVersion": "61.0",
+        "seleniumVersion": "3.11.0",
+        'name': 'Pytest Chrome W3C Sample'
+    }
+
+    chromeOpts =  {
+        'platformName':"Windows 10",
+        'browserName': "chrome",
+        'browserVersion': '61.0',
+        'goog:chromeOptions': {'w3c': True},
+        'sauce:options': sauceOptions
+    }
+    
+    driver = webdriver.Remote(remote_url, desired_capabilities=chromeOpts)
+    """
     if request.param == "chrome":
         driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()), options=options)
         request.cls.driver = driver
@@ -38,10 +61,3 @@ def pytest_sessionfinish(session):
     file = session.config._htmlfile
     # invoke the file opening in external tool
     os.system('open ' + file)
-
-"""
-
-load_dotenv()
-sauce_username = os.environ["SAUCE_USERNAME"]
-sauce_access_key = os.environ["SAUCE_ACCESS_KEY"]
-"""
