@@ -4,7 +4,7 @@ from Locators.login_page_locators import LoginLocators
 
 
 class LoginPage(BasePage):
-    # It is necessary to initialize the driver as a page class member for implement Page Factory.
+
     def __init__(self, driver):
         super().__init__(driver)
         self.driver.get(TestData.BASE_URL)
@@ -22,3 +22,4 @@ class LoginPage(BasePage):
         self.send_text(LoginLocators.EMAIL, username)
         self.send_text(LoginLocators.PASSWORD, invalid_password)
         self.click(LoginLocators.LOGIN_BUTTON)
+
