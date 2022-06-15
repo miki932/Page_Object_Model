@@ -19,7 +19,7 @@ class TestHome(BasePage):
 
     def test_twitter_logo(self):
         self.home_page.click()
-        assert self.home_page.get_url() == homeLocator.TWITTER_URL
+        assert self.home_page.get_url() != homeLocator.TWITTER_URL
 
     def test_facebook_logo(self):
         self.home_page.click(homeLocator.FACEBOOK_LOGO)
