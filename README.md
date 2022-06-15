@@ -1,5 +1,5 @@
-This is a sample project for implement the design pattern Page Object Model (POM).
+This is a sample project of `How to write from scratch automation project` by implement the design pattern Page Object Model (POM).
 
-First, visit this guide to better understand the project:
+To better understand the project, visit this guide:
 
 https://tech-blog-pax-romana.blogspot.com/2022/03/page-object-model.html
