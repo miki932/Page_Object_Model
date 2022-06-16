@@ -2,7 +2,6 @@ from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
 from Config.config import TestData
-from Pages.login_page import LoginPage
 
 
 class TestHome(BasePage):
