@@ -34,6 +34,7 @@ def init_driver(request):
     print(f"------Tear Down {request.param}------")
     driver.close()
 
+
 #Add a screenshot to report when a test failed
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
@@ -68,6 +69,11 @@ def pytest_configure(config):
 def pytest_sessionfinish(session):
     file = session.config._htmlfile
     os.system('open ' + file)
+
+
+# Read parameters from pytest Command Line
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="chrome", help="Default browser")
 
 
 """

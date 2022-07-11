@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from seleniumpagefactory.Pagefactory import PageFactory
-from Config.config import TestData
+from config import TestData
 
 
 class BasePage(PageFactory):

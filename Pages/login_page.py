@@ -1,4 +1,4 @@
-from Config.config import TestData
+from config import TestData
 from Pages.base_page import BasePage
 from Locators.login_page_locators import LoginLocators
 
