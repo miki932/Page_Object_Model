@@ -1,4 +1,4 @@
-selenium~=4.2.0
+selenium~=4.3.0
 pytest~=7.1.2
 selenium-page-factory~=2.5
-webdriver-manager~=3.7.0
+webdriver-manager~=3.8.0
