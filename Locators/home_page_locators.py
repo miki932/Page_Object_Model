@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 class HomePageLocators:
     # Object Repository:
 
-    # Header
     SHOPPING_CART = (By.ID, "shopping_cart_container")
     SHOPPING_CART_BADGE = (
         By.ID,
