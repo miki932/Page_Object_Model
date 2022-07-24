@@ -14,8 +14,7 @@ class TestLogin(BasePage):
         title = self.login_page.get_login_title(LoginLocators.LOGIN_PAGE_TITLE)
         assert title == LoginLocators.LOGIN_PAGE_TITLE
 
-    def do_login_and_go_to_home_page(self):
-        # self.login_page = LoginPage(self.driver)
+    def test_login(self):
         self.login_page.do_login(TestData.USER_NAME, TestData.PASSWORD)
         current_url = self.login_page.get_url()
         assert current_url == TestData.HOME_PAGE_URL

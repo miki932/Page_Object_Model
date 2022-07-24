@@ -22,4 +22,3 @@ class LoginPage(BasePage):
         self.send_text(LoginLocators.EMAIL, username)
         self.send_text(LoginLocators.PASSWORD, invalid_password)
         self.click(LoginLocators.LOGIN_BUTTON)
-

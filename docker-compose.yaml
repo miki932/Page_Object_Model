@@ -1,15 +1,16 @@
-# To execute this docker-compose yml file use `docker-compose -f <file_name> up`
-# Add the `-d` flag at the end for detached execution
+# To execute this docker-compose file
+# use `docker-compose -f <file_name> up -d`
+
 version: "3.9"
 services:
   selenium-hub:
-    image: selenium/hub
+    image: selenium/hub:latest
     container_name: selenium-hub
     ports:
       - "4444:4444"
 
   chrome:
-    image: selenium/node-chrome-debug
+    image: selenium/node-chrome-debug:latest
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
@@ -19,7 +20,7 @@ services:
       - HUB_PORT=4444
 
   firefox:
-    image: selenium/node-firefox-debug
+    image: selenium/node-firefox-debug:latest
     volumes:
       - /dev/shm:/dev/shm
     depends_on:

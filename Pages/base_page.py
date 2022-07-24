@@ -6,9 +6,10 @@ from config import TestData
 
 class BasePage(PageFactory):
     """
-    The Base_Page class is a parent of all pages & holds all common functionality across the website.
+    The Base_Page class is a parent of all pages & holds all common
+    functionality across the website.
     Also a wrapper for selenium functions.
-    I'm inherit from `selenium-page-factory`.
+    I'm inherit from `selenium-page-factory`,
     PageFactory is a simple Python library that provides page factory approach
     to implement page object model in selenium.
     """

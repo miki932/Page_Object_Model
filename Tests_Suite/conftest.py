@@ -74,29 +74,3 @@ def pytest_sessionfinish(session):
 # Read parameters from pytest Command Line
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome", help="Default browser")
-
-
-"""
-    # If we want to run our test on Selenium Grid via some cloud service:
-    # sauce_username = os.environ["SAUCE_USERNAME"]
-    # sauce_access_key = os.environ["SAUCE_ACCESS_KEY"]
-    # remote_url = f"http://{sauce_username}:{sauce_access_key}@ondemand.saucelabs.com/wd/hub"
-    # sauce_options = {
-    #     "screenResolution": "1280x768",
-    #     "platformName": "Windows 10",
-    #     "browserVersion": "61.0",
-    #     "seleniumVersion": "3.11.0",
-    #     'name': 'Pytest Chrome W3C Sample'
-    # }
-    #
-    # chrome_opts =  {
-    #     'platformName':"Windows 10",
-    #     'browserName': "chrome",
-    #     'browserVersion': '61.0',
-    #     'goog:chromeOptions': {'w3c': True},
-    #     'sauce:options': sauce_options
-    # }
-    #
-    # driver = webdriver.Remote(remote_url, desired_capabilities=chrome_opts)
-
-"""
