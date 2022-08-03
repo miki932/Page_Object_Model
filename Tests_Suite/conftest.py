@@ -8,26 +8,24 @@ import pytest
 import os
 
 
-@pytest.fixture(params=["chrome", "firefox"], scope="session")
+@pytest.fixture(params=["chrome"], scope="session")
 def init_driver(request):
     global driver
 
     if request.param == "chrome":
         print("-" * 6, request.param, "-" * 6)
         options = Chrome_Options()
-        options.headless = True
+        #options.headless = True
         driver = webdriver.Chrome(
-            service=Service(
-                executable_path=ChromeDriverManager().install()), options=options)
+            service=Service(executable_path=ChromeDriverManager().install()), options=options)
         request.driver = driver
 
     elif request.param == "firefox":
         print("-" * 6, request.param, "-" * 6)
         options = Firefox_Options()
-        options.headless = True
+        #options.headless = True
         driver = webdriver.Firefox(
-            service=Service(
-            executable_path=GeckoDriverManager().install()), options=options)
+            service=Service(executable_path=GeckoDriverManager().install()), options=options)
         request.driver = driver
 
     yield driver

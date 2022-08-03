@@ -44,6 +44,7 @@ class HomePageLocators:
     TWITTER_URL = "https://twitter.com/saucelabs"
     FACEBOOK_URL = "https://www.facebook.com/saucelabs"
     LINKEDIN_URL = "https://www.linkedin.com/company/sauce-labs/"
+    CART_PAGE_URL = "https://www.saucedemo.com/cart.html"
 
     # Burger Button
     ABOUT_PAGE = (By.ID, "about_sidebar_link")

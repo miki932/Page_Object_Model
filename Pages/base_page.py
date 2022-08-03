@@ -1,3 +1,4 @@
+from selenium.webdriver.support.expected_conditions import url_to_be
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from seleniumpagefactory.Pagefactory import PageFactory
@@ -9,9 +10,9 @@ class BasePage(PageFactory):
     The Base_Page class is a parent of all pages & holds all common
     functionality across the website.
     Also a wrapper for selenium functions.
-    I'm inherit from `selenium-page-factory`,
-    PageFactory is a simple Python library that provides page factory approach
-    to implement page object model in selenium.
+    I'm inheriting from `selenium-page-factory`,
+    PageFactory is a simple Python library that provides a page factory approach
+    to implement the page object model in selenium.
     """
     def __init__(self, driver):
         """This function is called every time a new object of the base class that created"""
@@ -50,3 +51,23 @@ class BasePage(PageFactory):
 
     def get_url(self) -> str:
         return self.driver.current_url
+
+    def is_link_work(self, url):
+        url_exists = WebDriverWait(self.driver, TestData.TIMEOUT).until(
+            EC.url_to_be(url)
+        )
+        return url_exists
+
+    def switch_tab(self):
+        original_window = self.driver.current_window_handle
+        WebDriverWait(self.driver, TestData.TIMEOUT).until(
+            EC.number_of_windows_to_be(2)
+        )
+        # Loop through until we find a new window handle
+        for window_handle in self.driver.window_handles:
+            if window_handle != original_window:
+                self.driver.switch_to.window(window_handle)
+                break
+
+    def close_current_tab(self):
+        return self.driver.close
