@@ -14,6 +14,7 @@ class BasePage(PageFactory):
     PageFactory is a simple Python library that provides a page factory approach
     to implement the page object model in selenium.
     """
+
     def __init__(self, driver):
         """This function is called every time a new object of the base class that created"""
         super().__init__()
@@ -70,4 +71,12 @@ class BasePage(PageFactory):
                 break
 
     def close_current_tab(self):
-        return self.driver.close
+        self.driver.close()
+
+    def focus(self):
+        another_window = list(set(self.driver.window_handles) - {self.driver.current_window_handle})[0]
+        self.driver.switch_to.window(another_window)
+
+    def print_current_url(self):
+        get_url = self.driver.current_url
+        print("The current url is:" + str(get_url))

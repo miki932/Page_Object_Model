@@ -10,22 +10,14 @@ class TestHome(BasePage):
         self.home_page = HomePage(self.driver)
         self.driver.get(TestData.HOME_PAGE_URL)
 
-    def test_twitter_logo(self, url=homeLocator.TWITTER_URL):
-        self.home_page.click(homeLocator.TWITTER_LOGO)
+    def test_logo(self, logo, url):
+        # Store the ID of the original window
+        original_window = self.driver.current_window_handle
+        self.home_page.click(logo)
         self.home_page.switch_tab()
         assert self.is_link_work(url)
-        self.home_page.close_current_tab()
-
-
-    def test_facebook_logo(self,url=homeLocator.FACEBOOK_URL):
-        self.home_page.click(homeLocator.FACEBOOK_LOGO)
-        self.home_page.switch_tab()
-        assert self.is_link_work(url)
-
-    def test_linkedin_logo(self, url=homeLocator.LINKEDIN_URL):
-        self.home_page.click(homeLocator.LINKEDIN_LOGO)
-        self.home_page.switch_tab()
-        assert self.is_link_work(url)
+        self.driver.close()
+        self.driver.switch_to.window(original_window)
 
     def test_shopping_badge_cart(self):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
