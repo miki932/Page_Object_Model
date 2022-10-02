@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import Select
 
 
 class HomePage(BasePage):
-
     def __init__(self, driver):
         super().__init__(driver)
         self.driver.get(TestData.HOME_PAGE_URL)
@@ -14,7 +13,7 @@ class HomePage(BasePage):
     def add_to_cart(self, by_locator):
         self.click(by_locator)
 
-    def sort(self, value):
+    def sort_btn(self, value):
         select = Select(homeLocator.SORT_BTN)
         select.select_by_value(value)
 

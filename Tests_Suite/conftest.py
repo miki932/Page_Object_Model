@@ -15,17 +15,21 @@ def init_driver(request):
     if request.param == "chrome":
         print("-" * 6, request.param, "-" * 6)
         options = Chrome_Options()
-        #options.headless = True
+        # options.headless = True
         driver = webdriver.Chrome(
-            service=Service(executable_path=ChromeDriverManager().install()), options=options)
+            service=Service(executable_path=ChromeDriverManager().install()),
+            options=options,
+        )
         request.driver = driver
 
     elif request.param == "firefox":
         print("-" * 6, request.param, "-" * 6)
         options = Firefox_Options()
-        #options.headless = True
+        # options.headless = True
         driver = webdriver.Firefox(
-            service=Service(executable_path=GeckoDriverManager().install()), options=options)
+            service=Service(executable_path=GeckoDriverManager().install()),
+            options=options,
+        )
         request.driver = driver
 
     yield driver
@@ -33,7 +37,7 @@ def init_driver(request):
     driver.close()
 
 
-#Add a screenshot to report when a test failed
+# Add a screenshot to report when a test failed
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
     pytest_html = item.config.pluginmanager.getplugin("html")
@@ -50,8 +54,10 @@ def pytest_runtest_makereport(item):
             destination_file = os.path.join(report_directory, file_name)
             driver.save_screenshot(destination_file)
             if file_name:
-                html = '<div><img src="%s" alt="screenshot" style="width:300px;height=200px"' \
-                       'onclick="window.open(this.src)" align="right"/></div>' % file_name
+                html = (
+                    '<div><img src="%s" alt="screenshot" style="width:300px;height=200px"'
+                    'onclick="window.open(this.src)" align="right"/></div>' % file_name
+                )
                 # only add additional html on failure
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
@@ -66,9 +72,11 @@ def pytest_configure(config):
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session):
     file = session.config._htmlfile
-    os.system('open ' + file)
+    os.system("open " + file)
 
 
 # Read parameters from pytest Command Line
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome", help="Default browser")
+    parser.addoption(
+        "--browser", action="store", default="chrome", help="Default browser"
+    )

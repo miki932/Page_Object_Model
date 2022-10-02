@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
@@ -21,9 +23,20 @@ class TestHome(BasePage):
 
     def test_shopping_badge_cart(self):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
-        assert homeLocator.SHOPPING_CART_BADGE == 1
-        self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_2)
-        assert homeLocator.SHOPPING_CART_BADGE == 2
+        # print(homeLocator.SHOPPING_CART_BADGE.get_attribute('shopping_cart_badge'))
+        # obj = (By.CLASS_NAME, "shopping_cart_badge")
+        element = self.driver.find_element(
+            By.XPATH,
+            '//*[@class="shopping_cart_link"]//*[@class="shopping_cart_badge"]',
+        )
+        print(element)
+        print(type(element))
+        # print(element.get_element())
+
+        # assert homeLocator.SHOPPING_CART_BADGE.get_attribute('value') == 1
+        # self.home_page.click(homeLocator.BACK_TO_PRODUCT)
+        # self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_2)
+        # assert homeLocator.SHOPPING_CART_BADGE.get_attribute('value') == 2
 
     def test_remove_from_cart(self):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
@@ -38,4 +51,3 @@ class TestHome(BasePage):
     def test_logout_btn(self):
         self.home_page.go_to_logout()
         assert self.get_url() == TestData.BASE_URL
-        
