@@ -34,8 +34,7 @@ class BasePage(PageFactory):
 
     def get_title(self, title) -> str:
         """Returns the title of the page"""
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.title_is(title))
+        WebDriverWait(self.driver, TestData.TIMEOUT).until(EC.title_is(title))
         return self.driver.title
 
     def get_element(self, web_element) -> str:
@@ -74,7 +73,9 @@ class BasePage(PageFactory):
         self.driver.close()
 
     def focus(self):
-        another_window = list(set(self.driver.window_handles) - {self.driver.current_window_handle})[0]
+        another_window = list(
+            set(self.driver.window_handles) - {self.driver.current_window_handle}
+        )[0]
         self.driver.switch_to.window(another_window)
 
     def print_current_url(self):

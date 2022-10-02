@@ -20,6 +20,8 @@ class TestLogin(BasePage):
         assert current_url == TestData.HOME_PAGE_URL
 
     def test_invalid_login(self):
-        self.login_page.invalid_login(TestData.INVALID_USER_NAME, TestData.INVALID_PASSWORD)
+        self.login_page.invalid_login(
+            TestData.INVALID_USER_NAME, TestData.INVALID_PASSWORD
+        )
         err_msg = self.login_page.is_visible(LoginLocators.ERROR_MESSAGE)
         assert err_msg

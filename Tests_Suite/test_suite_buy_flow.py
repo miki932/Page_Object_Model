@@ -3,7 +3,7 @@ from Tests.test_home_page import TestHome
 from Tests.test_login_page import TestLogin
 
 
-#class TestBuyingFlow:
+# class TestBuyingFlow:
 def test_buy_flow(init_driver):
     login_page = TestLogin(init_driver)
     home_page = TestHome(init_driver)
