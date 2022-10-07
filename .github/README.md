@@ -8,4 +8,3 @@ https://tech-blog-pax-romana.blogspot.com/2022/03/page-object-model.html
 
 Install the depended packages in `requirements.txt`,
 using `pip install -r requirements.txt`
-blabla

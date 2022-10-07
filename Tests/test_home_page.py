@@ -1,16 +1,15 @@
 from selenium.webdriver.common.by import By
-
 from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
-from config import TestData
+import config
 
 
 class TestHome(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.home_page = HomePage(self.driver)
-        self.driver.get(TestData.HOME_PAGE_URL)
+        self.driver.get(config.HOME_PAGE_URL)
 
     def test_logo(self, logo, url):
         # Store the ID of the original window
@@ -50,4 +49,4 @@ class TestHome(BasePage):
 
     def test_logout_btn(self):
         self.home_page.go_to_logout()
-        assert self.get_url() == TestData.BASE_URL
+        assert self.get_url() == config.BASE_URL
