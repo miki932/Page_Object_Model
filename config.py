@@ -6,3 +6,7 @@ class TestData:
     PASSWORD = "secret_sauce"
     INVALID_PASSWORD = "12345"
     TIMEOUT = 10
+
+    # You should insert here your credentials, Notice: do not upload secret information to Github ! Be careful !
+    SAUCE_USERNAME = ""
+    SAUCE_ACCESS_KEY = ""
