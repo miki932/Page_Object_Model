@@ -12,4 +12,5 @@ def test_buy_flow(init_driver):
     home_page.test_logo(logo=homeLocator.TWITTER_LOGO, url=homeLocator.TWITTER_URL)
     # Verify Facebook logo takes us to Facebook
     home_page.test_logo(logo=homeLocator.FACEBOOK_LOGO, url=homeLocator.FACEBOOK_URL)
-    home_page.test_shopping_badge_cart()
+
+    # home_page.test_shopping_badge_cart()

@@ -35,7 +35,6 @@ class HomePageLocators:
     # Footer
     TWITTER_LOGO = (By.XPATH, '//*[@id="page_wrapper"]/footer/ul/li[1]/a')
     FACEBOOK_LOGO = (By.XPATH, '//*[@id="page_wrapper"]/footer/ul/li[2]/a')
-    LINKEDIN_LOGO = (By.XPATH, '//*[@id="page_wrapper"]/footer/ul/li[3]/a')
 
     TWITTER_URL = "https://twitter.com/saucelabs"
     FACEBOOK_URL = "https://www.facebook.com/saucelabs"

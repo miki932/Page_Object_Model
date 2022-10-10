@@ -20,6 +20,7 @@ class BasePage(PageFactory):
         super().__init__()
         self.driver = driver
 
+    # Basic actions
     def click(self, web_element):
         """Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
