@@ -1,4 +1,9 @@
+from requests import options
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+
 from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
@@ -6,10 +11,10 @@ from config import TestData
 
 
 class TestHome(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.home_page = HomePage(self.driver)
-        self.driver.get(TestData.HOME_PAGE_URL)
+    def __init__(self, base_url=TestData.HOME_PAGE_URL):
+        super().__init__(self)
+        self.base_url = base_url
+        self.home_page = HomePage()
 
     def test_logo(self, logo, url):
         # Store the ID of the original window
@@ -21,17 +26,15 @@ class TestHome(BasePage):
         self.driver.switch_to.window(original_window)
 
     def test_shopping_badge_cart(self):
-        self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
-        # print(homeLocator.SHOPPING_CART_BADGE.get_attribute('shopping_cart_badge'))
-        # obj = (By.CLASS_NAME, "shopping_cart_badge")
-        element = self.driver.find_element(
-            By.XPATH,
-            '//*[@class="shopping_cart_link"]//*[@class="shopping_cart_badge"]',
-        )
-        print(element)
-        print(type(element))
-        # print(element.get_element())
+        # self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
+        # self.home_page.click(homeLocator.ADD_TO_CART)
+        obj = self.driver.find_element(homeLocator.SHOPPING_CART_BADGE)
+        print((type(obj)))
 
+        # element = self.driver.find_element(
+        #     By.XPATH,
+        #     '//*[@class="shopping_cart_link"]//*[@class="shopping_cart_badge"]',
+        # )
         # assert homeLocator.SHOPPING_CART_BADGE.get_attribute('value') == 1
         # self.home_page.click(homeLocator.BACK_TO_PRODUCT)
         # self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_2)
@@ -50,3 +53,12 @@ class TestHome(BasePage):
     def test_logout_btn(self):
         self.home_page.go_to_logout()
         assert self.get_url() == TestData.BASE_URL
+
+
+# if __name__ == '__main__':
+#     driver = webdriver.Chrome(
+#             service=Service(executable_path=ChromeDriverManager().install()))
+#     obj = TestHome()
+#     obj.test_shopping_badge_cart()
+#     driver.close()
+#     driver.quit()

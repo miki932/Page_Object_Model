@@ -1,52 +1,71 @@
-from selenium.webdriver.support.expected_conditions import url_to_be
+from selenium.common import TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from seleniumpagefactory.Pagefactory import PageFactory
 from config import TestData
 
+"""
+# TODO: custom logger.
+# TODO: get element func.
+# TODO: Jenkins integration.
+# TODO: TestPlan management integration.
+# TODO: Wrap all in Docker.
+# TODO: Run test in parallel.
+# TODO: Allure integration.
+# TODO: Add option from command line (chrome, firefox).
+# TODO: Pytest - Separate to regression/sanity etc.
+"""
 
-class BasePage(PageFactory):
+
+class BasePage:
     """
     The Base_Page class is a parent of all pages & holds all common
     functionality across the website.
-    Also a wrapper for selenium functions.
-    I'm inheriting from `selenium-page-factory`,
-    PageFactory is a simple Python library that provides a page factory approach
-    to implement the page object model in selenium.
     """
 
     def __init__(self, driver):
-        """This function is called every time a new object of the base class that created"""
         super().__init__()
         self.driver = driver
 
     # Basic actions
-    def click(self, web_element):
+    def click(self, locator):
         """Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(web_element)
+            EC.visibility_of_element_located(locator)
         ).click()
 
-    def send_text(self, web_element, text):
+    def send_text(self, locator, text):
         """Performs text entry of the passed in text, in a web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(web_element)
+            EC.visibility_of_element_located(locator)
         ).send_keys(text)
+
+    def get_element_text(self, locator):
+        return self.driver.find_element(locator).text
+
+    def hover(self, locator):
+        element = self.driver.find_element(locator)
+        hover = ActionChains(self.driver).move_to_element(element)
+        hover.perform()
 
     def get_title(self, title) -> str:
         """Returns the title of the page"""
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(EC.title_is(title))
+        try:
+            WebDriverWait(self.driver, TestData.TIMEOUT).until(EC.title_is(title))
+        except TimeoutException:
+            print("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
         return self.driver.title
 
-    def get_element(self, web_element) -> str:
+    def get_element(self, locator) -> str:
+
         element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(web_element)
+            EC.visibility_of_element_located(locator)
         )
         return element.text
 
-    def is_visible(self, web_element):
+    def is_visible(self, locator):
         element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(web_element)
+            EC.visibility_of_element_located(locator)
         )
         return bool(element)
 
@@ -73,6 +92,28 @@ class BasePage(PageFactory):
     def close_current_tab(self):
         self.driver.close()
 
+    def accept_alert(self, text=""):
+        alert = self.driver.switch_to.alert
+        alert_text = alert.text
+        if text in alert_text:
+            alert.accept()
+        else:
+            raise Exception(
+                f"Invalid alert with text {alert_text} and not containing {text}"
+            )
+        return alert_text
+
+    def dismiss_alert(self, text):
+        alert = self.driver.switch_to.alert()
+        alert_text = alert.text
+        if text in alert_text:
+            alert.dismiss()
+        else:
+            raise Exception(
+                f"Invalid alert with text {alert_text} and not containing {text}"
+            )
+        return alert_text
+
     def focus(self):
         another_window = list(
             set(self.driver.window_handles) - {self.driver.current_window_handle}
@@ -82,3 +123,43 @@ class BasePage(PageFactory):
     def print_current_url(self):
         get_url = self.driver.current_url
         print("The current url is:" + str(get_url))
+
+
+"""
+    def check_element_displayed(self, locator):
+        # This method checks if the web element is present in page or not and returns True or False accordingly
+
+        result_flag = False
+        try:
+            if self.get_element(locator) is not None:
+                element = self.get_element(locator, verbose_flag=False)
+                if element.is_displayed() is True:
+                    result_flag = True
+        except Exception as e:
+            self.write(e)
+            self.exceptions.append(
+                "Web element not present in the page, please check the"
+                f" locator is correct - {locator} in the conf/locators.conf file"
+            )
+
+        return result_flag
+
+    def check_element_present(self, locator):
+        # This method checks if the web element is present in page or not and returns True or False accordingly
+        result_flag = False
+        if self.get_element(locator, verbose_flag=False) is not None:
+            result_flag = True
+
+        return result_flag
+
+    def find_element_in_page(self, locator, locatorType="id"):
+        element = None
+        try:
+            locatorType = locatorType.lower()
+            byType = self.getByType(locatorType)
+            element = self.driver.find_element(byType, locator)
+            self.log.info("Element found with locator: " + locator + " and  locatorType: " + locatorType)
+        except:
+            self.log.info("Element not found with locator: " + locator + " and  locatorType: " + locatorType)
+        return element
+"""

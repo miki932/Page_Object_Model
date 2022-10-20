@@ -5,8 +5,8 @@ from selenium.webdriver.support.ui import Select
 
 
 class HomePage(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self):
+        super().__init__(self)
         self.driver.get(TestData.HOME_PAGE_URL)
 
     # Page Actions:
@@ -27,3 +27,8 @@ class HomePage(BasePage):
     def go_to_logout(self):
         self.click(homeLocator.BURGER_MENU)
         self.click(homeLocator.LOGOUT_BTN)
+
+    def find_elem(
+        self,
+    ):
+        self.driver.WebElement.find_element(self, by=None, value=None)

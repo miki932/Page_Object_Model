@@ -4,8 +4,8 @@ from Locators.login_page_locators import LoginLocators
 
 
 class LoginPage(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self):
+        super().__init__(self)
         self.driver.get(TestData.BASE_URL)
 
     # Page Actions:
@@ -21,3 +21,6 @@ class LoginPage(BasePage):
         self.send_text(LoginLocators.EMAIL, username)
         self.send_text(LoginLocators.PASSWORD, invalid_password)
         self.click(LoginLocators.LOGIN_BUTTON)
+
+    def go_to(self):
+        self.driver.get(TestData.BASE_URL)

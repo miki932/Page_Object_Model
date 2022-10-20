@@ -13,7 +13,8 @@ class HomePageLocators:
 
     ITEM_FOR_SALE_1 = (
         By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_4_title_link"]',
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]'
+        '//*[@id="item_4_title_link"]//*[@class="inventory_item_name"]',
     )
     ITEM_FOR_SALE_2 = (
         By.XPATH,

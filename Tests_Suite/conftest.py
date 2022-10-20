@@ -11,6 +11,10 @@ import os
 @pytest.fixture(params=["chrome"], scope="session")
 def init_driver(request):
     global driver
+    """
+    browser_name = request.config.getoption("browser_name")
+    if browser_name == "chrome":
+    """
 
     if request.param == "chrome":
         print("-" * 6, request.param, "-" * 6)
@@ -35,6 +39,7 @@ def init_driver(request):
     yield driver
     print(f"------Tear Down {request.param}------")
     driver.close()
+    print("*** Test Completed ***")
 
 
 # Add a screenshot to report when a test failed
