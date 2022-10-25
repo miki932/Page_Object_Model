@@ -1,3 +1,6 @@
+import json
+
+
 class TestData:
     BASE_URL = "https://www.saucedemo.com/"
     HOME_PAGE_URL = "https://www.saucedemo.com/inventory.html"
@@ -6,8 +9,9 @@ class TestData:
     PASSWORD = "secret_sauce"
     INVALID_PASSWORD = "12345"
     TIMEOUT = 10
+    TITLE = "Swag Labs"
 
     # You should insert here your credentials,
-    # Notice: do not upload secret information to Github ! Be careful !
+    # Notice: do not upload secret information to GitHub ! Be careful !
     SAUCE_USERNAME = ""
     SAUCE_ACCESS_KEY = ""

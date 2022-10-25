@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from config import TestData
 
 """
+# TODO: fix driver issue
 # TODO: custom logger.
 # TODO: get element func.
 # TODO: Jenkins integration.
@@ -162,4 +163,122 @@ class BasePage:
         except:
             self.log.info("Element not found with locator: " + locator + " and  locatorType: " + locatorType)
         return element
+        
+    def is_element_present(self, how, what):
+        try:
+            self.browser.find_element(how, what)
+        except NoSuchElementException:
+            return False
+        return True
+        
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+    
+        return True
+        
+    def get_text(self, locator="", locator_type="id", element=None, info=""):
+            
+            Get the 'Text' displayed for an element
+            Either provide element or a combination of locator and locator_type
+            :param locator: Unique identifier for the element to be found
+            :param locator_type: Type of locator being passed (default "id")
+            :param element: Element to perform the action against
+            :param info: Message to be included in the logs        
+            
+            try:
+                # if locator passed in, go find the associated element
+                if locator:
+                    element = self.get_element(locator, locator_type)
+                text = element.text
+                self.log.debug("Found element size: " + str(len(text)))
+                if len(text) == 0:
+                    text = element.get_attribute("innerText")
+                if len(text) != 0:
+                    self.log.debug("Getting text on element: " + info)
+                    self.log.debug("The text is: " + text)
+                    text = text.strip()
+            except:
+                self.log.error("Failed to get text on element: " + info)
+                print_stack()
+                text = None
+            return text
+            
+        import csv
+    def getCSVData(fileName):
+        # create an empty list to store rows
+        rows = []
+        # open the CSV file
+        dataFile = open(fileName, "r")
+        # create a CSV Reader from CSV file
+        reader = csv.reader(dataFile)
+        # skip the headers
+        next(reader)
+        # add rows from reader to list
+        for row in reader:
+            rows.append(row)
+        return rows
+        
+
+    def verify_title(self):
+        if self.get_title() == 'Google':
+            return True
+        else:
+            return False
+            
+    
+import logging
+
+class LogGen:
+
+    @staticmethod
+    def loggen():
+        for handler in logging.root.handlers[:]:
+            logging.root.removeHandler(handler)
+
+        logging.basicConfig(filename="./Logs/automation.log", filemode='w',
+                            format='%(asctime)s: %(levelname)s: %(message)s',
+                            datefmt='%m/%d/%Y %I:%M:%S %p')
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
+        return logger
+
+
+        
+import inspect
+import logging
+
+
+def customLogger(logLevel=logging.DEBUG):
+
+# Gets the name of the class / method from where this method is called
+    loggerName = inspect.stack()[1][3]
+    logger = logging.getLogger(loggerName)
+# By default, log all messages
+    logger.setLevel(logging.DEBUG)
+
+    fileHandler = logging.FileHandler("automation.log", mode='a')
+    fileHandler.setLevel(logLevel)
+
+# Create formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s', datefmt='%m%d%Y %I:%M:%S %p')
+
+# add formatter to console handler --> chandler
+    fileHandler.setFormatter(formatter)
+
+# add console handler to logger
+    logger.addHandler(fileHandler)
+
+    return logger
+    
+    
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
 """
