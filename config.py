@@ -17,13 +17,10 @@ class TestData:
     TIMEOUT = 10
     TITLE = "Swag Labs"
 
-    TEST_TITLE = ""
-    PROJECT_ROOT_DIR = file_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))
-    )
-    LOG_DIR = PROJECT_ROOT_DIR + "/logs/"
-    REPORT_DIR = PROJECT_ROOT_DIR + "/reports/"
-    DATA_DIR = PROJECT_ROOT_DIR + "/data/"
-    IMAGE_DIR = REPORT_DIR + "/images/"
-    BROWSER = "chrome"
-    DATETIME_NOW = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+    # TEST_TITLE = ""
+    # PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # LOG_DIR = PROJECT_ROOT_DIR + "/logs/"
+    # REPORT_DIR = PROJECT_ROOT_DIR + "/reports/"
+    # DATA_DIR = PROJECT_ROOT_DIR + "/data/"
+    # IMAGE_DIR = REPORT_DIR + "/images/"
+    # DATETIME_NOW = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")

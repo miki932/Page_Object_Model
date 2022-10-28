@@ -38,7 +38,7 @@ def init_driver(request):
 
     yield driver
     print(f"------Tear Down {request.param}------")
-    driver.close()
+    driver.quit()
     print("**** Test Completed ****")
 
 
@@ -77,7 +77,7 @@ def pytest_configure(config):
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session):
     file = session.config._htmlfile
-    os.system("open " + file)
+    os.system("open " + str(file))
 
 
 # Read parameters from pytest Command Line
