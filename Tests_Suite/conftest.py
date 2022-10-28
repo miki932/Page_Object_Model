@@ -39,7 +39,7 @@ def init_driver(request):
     yield driver
     print(f"------Tear Down {request.param}------")
     driver.close()
-    print("*** Test Completed ***")
+    print("**** Test Completed ****")
 
 
 # Add a screenshot to report when a test failed
