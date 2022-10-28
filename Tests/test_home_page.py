@@ -11,10 +11,11 @@ from config import TestData
 
 
 class TestHome(BasePage):
-    def __init__(self, base_url=TestData.HOME_PAGE_URL):
+    def __init__(self, driver, base_url=TestData.HOME_PAGE_URL):
         super().__init__(self)
         self.base_url = base_url
-        self.home_page = HomePage()
+        self.driver = driver
+        self.home_page = HomePage(driver)
 
     def test_logo(self, logo, url):
         # Store the ID of the original window

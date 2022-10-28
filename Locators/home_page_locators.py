@@ -34,8 +34,14 @@ class HomePageLocators:
     )
 
     # Footer
-    TWITTER_LOGO = (By.XPATH, '//*[@id="page_wrapper"]/footer/ul/li[1]/a')
-    FACEBOOK_LOGO = (By.XPATH, '//*[@id="page_wrapper"]/footer/ul/li[2]/a')
+    TWITTER_LOGO = (
+        By.XPATH,
+        '//*[@class="footer"]//*[@class="social"]//*[@class="social_twitter"]',
+    )
+    FACEBOOK_LOGO = (
+        By.XPATH,
+        '//*[@class="footer"]//*[@class="social"]//*[@class="social_facebook"]',
+    )
 
     TWITTER_URL = "https://twitter.com/saucelabs"
     FACEBOOK_URL = "https://www.facebook.com/saucelabs"

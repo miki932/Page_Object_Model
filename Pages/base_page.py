@@ -25,7 +25,6 @@ class BasePage:
     """
 
     def __init__(self, driver):
-        super().__init__()
         self.driver = driver
 
     # Basic actions
@@ -281,4 +280,59 @@ def customLogger(logLevel=logging.DEBUG):
         except TimeoutException:
             return False
         return True
+        
+    def select_drop_down(self, by_locator, text):
+        select = Select(self.driver.find_element(*by_locator))
+        select.select_by_visible_text(text)
+        
+    def get_element_text(self, by_locator):
+        return WebDriverWait(self.driver, 1).until(ec.presence_of_element_located(by_locator)).text
+
+    def switch_alert(self):
+        try:
+            alert = self.driver.switch_to.alert
+        except Exception as e:
+            self.logger.error(f'Error when switching alert pop')
+            self.logger.exception(e)
+        else:
+            return alert
+
+    def alert_process(self, process, message=None):
+        try:
+            alert = self.switch_alert()
+            if(process == 'accept'):
+                alert.accept()
+            elif(process == 'dismiss'):
+                alert.dismiss()
+            elif(process == 'message'):
+                alert.send_keys(message)
+        except Exception as e:
+            self.logger.error(f'Error when process alert')
+            self.logger.exception(e)   
+            
+    def switch_window(self, index):
+        try:
+            self.driver.switch_to.window(self.driver.window_handles[index])
+        except Exception as e:
+            self.logger.error('Error when switching browser window')
+            self.logger.exception(e)
+
+    def find_element(self, loc):
+        try:
+            element = WebDriverWait(self.driver, 5, 0.5).until(lambda x: x.find_element(loc[0], loc[1]));
+        except Exception as e:
+            self.logger.error(f'Error when find element {loc}')
+            self.logger.exception(e)
+        else:
+            return element
+
+    def find_elements(self, loc):
+        try:
+            element = WebDriverWait(self.driver, 5, 0.5).until(lambda x: x.find_elements(loc[0], loc[1]))
+        except Exception as e:
+            self.logger.error(f'Error when find elements {loc}')
+            self.logger.exception(e)
+        else:
+            return element
+
 """

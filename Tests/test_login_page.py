@@ -5,9 +5,9 @@ from config import TestData
 
 
 class TestLogin(BasePage):
-    def __init__(self):
-        super().__init__(self)
-        self.login_page = LoginPage()
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.login_page = LoginPage(driver)
         self.driver.get(TestData.BASE_URL)
 
     def test_login_page_title(self):

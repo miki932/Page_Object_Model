@@ -4,8 +4,8 @@ from Locators.login_page_locators import LoginLocators
 
 
 class LoginPage(BasePage):
-    def __init__(self):
-        super().__init__(self)
+    def __init__(self, driver):
+        super().__init__(driver)
         self.driver.get(TestData.BASE_URL)
 
     # Page Actions:

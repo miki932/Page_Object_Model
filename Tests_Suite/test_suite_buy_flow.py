@@ -6,11 +6,11 @@ from Tests.test_login_page import TestLogin
 
 @pytest.mark.reggression
 def test_buy_flow(init_driver):
-    login_page = TestLogin()
+    login_page = TestLogin(init_driver)
     # Assert login
     login_page.test_login()
 
-    home_page = TestHome()
+    home_page = TestHome(init_driver)
     # Verify Twitter logo takes us to twitter
     home_page.test_logo(logo=homeLocator.TWITTER_LOGO, url=homeLocator.TWITTER_URL)
     # Verify Facebook logo takes us to Facebook
