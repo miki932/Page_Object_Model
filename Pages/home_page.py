@@ -27,8 +27,3 @@ class HomePage(BasePage):
     def go_to_logout(self):
         self.click(homeLocator.BURGER_MENU)
         self.click(homeLocator.LOGOUT_BTN)
-
-    def find_elem(
-        self,
-    ):
-        self.driver.WebElement.find_element(self, by=None, value=None)

@@ -7,6 +7,8 @@ from selenium.webdriver.firefox.options import Options as Firefox_Options
 import pytest
 import os
 
+driver = None
+
 
 @pytest.fixture(params=["chrome"], scope="session")
 def init_driver(request):
@@ -15,31 +17,33 @@ def init_driver(request):
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
     """
+    try:
+        if request.param == "chrome":
+            print("-" * 6, request.param, "-" * 6)
+            options = Chrome_Options()
+            # options.headless = True
+            driver = webdriver.Chrome(
+                service=Service(executable_path=ChromeDriverManager().install()),
+                options=options,
+            )
+            request.driver = driver
 
-    if request.param == "chrome":
-        print("-" * 6, request.param, "-" * 6)
-        options = Chrome_Options()
-        # options.headless = True
-        driver = webdriver.Chrome(
-            service=Service(executable_path=ChromeDriverManager().install()),
-            options=options,
-        )
-        request.driver = driver
+        elif request.param == "firefox":
+            print("-" * 6, request.param, "-" * 6)
+            options = Firefox_Options()
+            # options.headless = True
+            driver = webdriver.Firefox(
+                service=Service(executable_path=GeckoDriverManager().install()),
+                options=options,
+            )
+            request.driver = driver
 
-    elif request.param == "firefox":
-        print("-" * 6, request.param, "-" * 6)
-        options = Firefox_Options()
-        # options.headless = True
-        driver = webdriver.Firefox(
-            service=Service(executable_path=GeckoDriverManager().install()),
-            options=options,
-        )
-        request.driver = driver
-
-    yield driver
-    print(f"------Tear Down {request.param}------")
-    driver.quit()
-    print("**** Test Completed ****")
+        yield driver
+        print(f"------Tear Down {request.param}------")
+        driver.quit()
+        print("**** Test Completed ****")
+    except Exception as e:
+        print(e)
 
 
 # Add a screenshot to report when a test failed

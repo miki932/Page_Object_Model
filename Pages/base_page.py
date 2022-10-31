@@ -4,34 +4,44 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from config import TestData
 
-"""
-# TODO: fix driver issue
-# TODO: custom logger.
-# TODO: get element func.
-# TODO: Jenkins integration.
-# TODO: TestPlan management integration.
-# TODO: Wrap all in Docker.
-# TODO: Run test in parallel.
-# TODO: Allure integration.
-# TODO: Add option from command line (chrome, firefox).
-# TODO: Pytest - Separate to regression/sanity etc.
-"""
-
 
 class BasePage:
     """
     The Base_Page class is a parent of all pages & holds all common
     functionality across the website.
+
+    # TODO: fix driver issue
+    # TODO: custom logger.
+    # TODO: get element func.
+    # TODO: Jenkins integration.
+    # TODO: TestPlan management integration.
+    # TODO: Wrap all in Docker.
+    # TODO: Run test in parallel.
+    # TODO: Allure integration.
+    # TODO: Add option from command line (chrome, firefox).
+    # TODO: Pytest - Separate to regression/sanity etc.
     """
 
     def __init__(self, driver):
         self.driver = driver
+        self.highlight_flag = False
 
     # Basic actions
+    def get_element(self, locator):
+        WebDriverWait(self.driver, TestData.TIMEOUT).until(
+            EC.visibility_of_element_located(locator)
+        )
+        element = self.driver.find_element(*locator)
+        return element
+
+    def get_element_text(self, locator) -> str:
+        element = self.driver.find_element(locator)
+        return element.text
+
     def click(self, locator):
         """Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(locator)
+            EC.element_to_be_clickable(locator)
         ).click()
 
     def send_text(self, locator, text):
@@ -39,9 +49,6 @@ class BasePage:
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.visibility_of_element_located(locator)
         ).send_keys(text)
-
-    def get_element_text(self, locator):
-        return self.driver.find_element(locator).text
 
     def hover(self, locator):
         element = self.driver.find_element(locator)
@@ -56,14 +63,7 @@ class BasePage:
             print("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
         return self.driver.title
 
-    def get_element(self, locator) -> str:
-
-        element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(locator)
-        )
-        return element.text
-
-    def is_visible(self, locator):
+    def is_visible(self, locator) -> bool:
         element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.visibility_of_element_located(locator)
         )
@@ -79,6 +79,11 @@ class BasePage:
         return url_exists
 
     def switch_tab(self):
+        """
+        I`m Not using this function anymore,
+        Because the function `switch_window` (belows) is a better approach from my point of view,
+        Because I can handle whatever specific window I want (index), but both are ok and work well.
+        """
         original_window = self.driver.current_window_handle
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.number_of_windows_to_be(2)
@@ -88,6 +93,13 @@ class BasePage:
             if window_handle != original_window:
                 self.driver.switch_to.window(window_handle)
                 break
+
+    def switch_window(self, index):
+        try:
+            self.driver.switch_to.window(self.driver.window_handles[index])
+        except Exception as e:
+            print("Error when switching browser window")
+            print(e)
 
     def close_current_tab(self):
         self.driver.close()
@@ -123,6 +135,30 @@ class BasePage:
     def print_current_url(self):
         get_url = self.driver.current_url
         print("The current url is:" + str(get_url))
+
+    def is_disappeared(self, locator, timeout=TestData.TIMEOUT):
+        try:
+            WebDriverWait(self.driver, timeout, 1, TestData.TIMEOUT).until_not(
+                EC.presence_of_element_located(locator)
+            )
+        except TimeoutException:
+            return False
+        return True
+
+    def execute_javascript(self, js_script, *args):
+        """Execute JavaScript"""
+        try:
+            self.driver.execute_script(js_script)
+        except Exception as e:
+            print(e)
+
+    def turn_on_highlight(self):
+        """Highlight the elements being operated upon"""
+        self.highlight_flag = True
+
+    def turn_off_highlight(self):
+        """Turn off the highlighting feature"""
+        self.highlight_flag = False
 
 
 """
@@ -177,33 +213,6 @@ class BasePage:
             return False
     
         return True
-        
-    def get_text(self, locator="", locator_type="id", element=None, info=""):
-            
-            Get the 'Text' displayed for an element
-            Either provide element or a combination of locator and locator_type
-            :param locator: Unique identifier for the element to be found
-            :param locator_type: Type of locator being passed (default "id")
-            :param element: Element to perform the action against
-            :param info: Message to be included in the logs        
-            
-            try:
-                # if locator passed in, go find the associated element
-                if locator:
-                    element = self.get_element(locator, locator_type)
-                text = element.text
-                self.log.debug("Found element size: " + str(len(text)))
-                if len(text) == 0:
-                    text = element.get_attribute("innerText")
-                if len(text) != 0:
-                    self.log.debug("Getting text on element: " + info)
-                    self.log.debug("The text is: " + text)
-                    text = text.strip()
-            except:
-                self.log.error("Failed to get text on element: " + info)
-                print_stack()
-                text = None
-            return text
             
         import csv
     def getCSVData(fileName):
@@ -311,33 +320,32 @@ class BasePage:
                 alert.send_keys(message)
         except Exception as e:
             self.logger.error(f'Error when process alert')
-            self.logger.exception(e)   
+            self.logger.exception(e) 
+              
+    def double_click(self, locator):
+        WebDriverWait(self.driver, TestData.TIMEOUT).until(
+            EC.visibility_of_element_located(locator)
+        ).double_click(self, locator)
+
+    def switch_alert(self):
+        try:
+            alert = self.driver.switch_to.alert
+        except Exception as e:
+            self.logger.error(f"Error when switching alert pop")
+            self.logger.exception(e)
+        else:
+            return alert
             
-    def switch_window(self, index):
+               def alert_process(self, process, message=None):
         try:
-            self.driver.switch_to.window(self.driver.window_handles[index])
+            alert = self.switch_alert()
+            if process == "accept":
+                alert.accept()
+            elif process == "dismiss":
+                alert.dismiss()
+            elif process == "message":
+                alert.send_keys(message)
         except Exception as e:
-            self.logger.error('Error when switching browser window')
+            self.logger.error(f"Error when process alert")
             self.logger.exception(e)
-
-    def find_element(self, loc):
-        try:
-            element = WebDriverWait(self.driver, 5, 0.5).until(lambda x: x.find_element(loc[0], loc[1]));
-        except Exception as e:
-            self.logger.error(f'Error when find element {loc}')
-            self.logger.exception(e)
-        else:
-            return element
-
-    def find_elements(self, loc):
-        try:
-            element = WebDriverWait(self.driver, 5, 0.5).until(lambda x: x.find_elements(loc[0], loc[1]))
-        except Exception as e:
-            self.logger.error(f'Error when find elements {loc}')
-            self.logger.exception(e)
-        else:
-            return element
-
-
-
 """
