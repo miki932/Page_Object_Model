@@ -1,3 +1,5 @@
+import time
+
 from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
@@ -23,18 +25,9 @@ class TestHome(BasePage):
     def test_shopping_badge_cart(self):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
         self.home_page.click(homeLocator.ADD_TO_CART)
-        obj = self.home_page.get_element(homeLocator.SHOPPING_CART_BADGE)
-        # obj = self.driver.find_element(self, homeLocator.SHOPPING_CART_BADGE)
-        print(type(obj))
-
-        # element = self.driver.find_element(
-        #     By.XPATH,
-        #     '//*[@class="shopping_cart_link"]//*[@class="shopping_cart_badge"]',
-        # )
-        # assert homeLocator.SHOPPING_CART_BADGE.get_attribute('value') == 1
-        # self.home_page.click(homeLocator.BACK_TO_PRODUCT)
-        # self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_2)
-        # assert homeLocator.SHOPPING_CART_BADGE.get_attribute('value') == 2
+        cart_counter = self.home_page.get_element(homeLocator.SHOPPING_CART_BADGE).text
+        assert int(cart_counter) == 1
+        assert self.home_page.is_visible(homeLocator.IMAGE_ITEM)
 
     def test_remove_from_cart(self):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)

@@ -10,6 +10,7 @@ class HomePageLocators:
     BACK_TO_PRODUCT = (By.ID, "back-to-products")
     ADD_TO_CART = (By.ID, "add-to-cart-sauce-labs-backpack")
     REMOVE_FROM_CART = (By.ID, "remove-sauce-labs-backpack")
+    IMAGE_ITEM = (By.CLASS_NAME, "inventory_details_img_container")
 
     ITEM_FOR_SALE_1 = (
         By.XPATH,

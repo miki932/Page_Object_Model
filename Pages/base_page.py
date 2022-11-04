@@ -3,6 +3,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from config import TestData
+import logging
 
 
 class BasePage:
@@ -10,7 +11,6 @@ class BasePage:
     The Base_Page class is a parent of all pages & holds all common
     functionality across the website.
 
-    # TODO: fix driver issue
     # TODO: custom logger.
     # TODO: get element func.
     # TODO: Jenkins integration.
@@ -34,10 +34,6 @@ class BasePage:
         element = self.driver.find_element(*locator)
         return element
 
-    def get_element_text(self, locator) -> str:
-        element = self.driver.find_element(locator)
-        return element.text
-
     def click(self, locator):
         """Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
@@ -55,6 +51,25 @@ class BasePage:
         hover = ActionChains(self.driver).move_to_element(element)
         hover.perform()
 
+    def execute_script(self, script):
+        """
+        Execute JavaScript using web driver on selected web element
+        :param: Javascript to be execute
+        :return: None / depends on Script
+        """
+        return self.parent.execute_script(script, self)
+
+    def highlight_web_element(self, element):
+        """
+        To highlight webElement
+        :param: WebElement
+        :return: None
+        """
+        if self.highlight:
+            self.driver.execute_script(
+                "arguments[0].style.border='2px ridge #33ffff'", element
+            )
+
     def get_title(self, title) -> str:
         """Returns the title of the page"""
         try:
@@ -71,6 +86,9 @@ class BasePage:
 
     def get_url(self) -> str:
         return self.driver.current_url
+
+    def get_element_attr(self):
+        pass
 
     def is_link_work(self, url):
         url_exists = WebDriverWait(self.driver, TestData.TIMEOUT).until(
@@ -348,4 +366,79 @@ class BasePage:
         except Exception as e:
             self.logger.error(f"Error when process alert")
             self.logger.exception(e)
+            
+            
+
+import os, sys
+sys.path.append(os.getcwd())
+import logging
+from config.configuration import Global
+
+class Logger(logging.Logger):
+    def __init__(self, logger, logger_level = logging.DEBUG) -> None:
+        super().__init__(logger)
+        formatter = logging.Formatter('[%(asctime)s] %(name)s - %(funcName)s - %(levelname)s - %(message)s')
+        file_name = Global.LOG_DIR + Global.DATETIME_NOW + '_log.log'
+        file_handler = logging.FileHandler(file_name, encoding="utf-8-sig")
+        file_handler.setLevel(logger_level)
+        file_handler.setFormatter(formatter)
+        self.addHandler(file_handler)
+        
+        
+        import inspect
+import logging
+
+
+def customLogger(loglevel=logging.DEBUG):
+    #get the name of the class / method from where this method is called
+    loggerName = inspect.stack()[1][3]
+    logger = logging.getLogger(loggerName)
+    #By default , log all message
+    logger.setLevel(logging.DEBUG)
+
+    fileHandler = logging.FileHandler("automation.log", mode='a')
+    fileHandler.setLevel(loglevel)
+
+    formatter = logging.Formatter('%(asctime)s: %(levelname)s: %(message)s',
+                    datefmt="%m/%d/%Y %I:%M:%S %p")
+    fileHandler.setFormatter(formatter)
+    logger.addHandler(fileHandler)
+
+    return logger
+    
+    
+import logging
+import time
+
+
+class Logger():
+
+    def __init__(self, logger, file_level=logging.INFO):
+        self.logger = logging.getLogger(logger)
+        self.logger.setLevel(logging.DEBUG)
+
+        fmt = logging.Formatter('%(asctime)s - %(filename)s:[%(lineno)s] - [%(levelname)s] - %(message)s')
+
+        curr_time = time.strftime("%Y-%m-%d")
+        self.LogFileName = '/Users/animeshmukherjee/PycharmProjects/pythonProject/Appium_Page_Object_Model/Logs/log' + curr_time + '.txt'
+        # "a" to append the logs in same file, "w" to generate new logs and delete old one
+        fh = logging.FileHandler(self.LogFileName, mode="a")
+        fh.setFormatter(fmt)
+        fh.setLevel(file_level)
+        self.logger.addHandler(fh)
+        
+        import os, sys
+sys.path.append(os.getcwd())
+import logging
+from config.configuration import Global
+
+class Logger(logging.Logger):
+    def __init__(self, logger, logger_level = logging.DEBUG) -> None:
+        super().__init__(logger)
+        formatter = logging.Formatter('[%(asctime)s] %(name)s - %(funcName)s - %(levelname)s - %(message)s')
+        file_name = Global.LOG_DIR + Global.DATETIME_NOW + '_log.log'
+        file_handler = logging.FileHandler(file_name, encoding="utf-8-sig")
+        file_handler.setLevel(logger_level)
+        file_handler.setFormatter(formatter)
+        self.addHandler(file_handler)
 """
