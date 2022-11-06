@@ -54,10 +54,10 @@ class BasePage:
     def execute_script(self, script):
         """
         Execute JavaScript using web driver on selected web element
-        :param: Javascript to be execute
+        :param: Javascript to be executed
         :return: None / depends on Script
         """
-        return self.parent.execute_script(script, self)
+        return self.execute_script(script)
 
     def highlight_web_element(self, element):
         """
@@ -65,10 +65,9 @@ class BasePage:
         :param: WebElement
         :return: None
         """
-        if self.highlight:
-            self.driver.execute_script(
-                "arguments[0].style.border='2px ridge #33ffff'", element
-            )
+        self.driver.execute_script(
+            "arguments[0].style.border='2px ridge #33ffff'", element
+        )
 
     def get_title(self, title) -> str:
         """Returns the title of the page"""
