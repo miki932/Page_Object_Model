@@ -26,4 +26,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run sanity suite
       run: |
-        pytest Test_Suite/test_suite_buy_flow.py
+        pytest test_suite_buy_flow.py
