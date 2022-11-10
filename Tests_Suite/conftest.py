@@ -13,6 +13,7 @@ driver = None
 @pytest.fixture(params=["chrome"], scope="session")
 def init_driver(request):
     global driver
+    print(driver)
     """
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
@@ -21,7 +22,8 @@ def init_driver(request):
         if request.param == "chrome":
             print("-" * 6, request.param, "-" * 6)
             options = Chrome_Options()
-            # options.headless = True
+            options.headless = True
+            options.add_argument("--disable-gpu")
             driver = webdriver.Chrome(
                 service=Service(executable_path=ChromeDriverManager().install()),
                 options=options,
