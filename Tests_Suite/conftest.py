@@ -20,6 +20,7 @@ def init_driver(request):
             print("-" * 6, request.param, "-" * 6)
             options = Chrome_Options()
             options.headless = True
+            options.add_argument("--disable-gpu")
             driver = webdriver.Chrome(
                 service=Service(executable_path=ChromeDriverManager().install()),
                 options=options,
@@ -46,7 +47,7 @@ def init_driver(request):
 
 # Add a screenshot to report when a test failed
 @pytest.hookimpl(hookwrapper=True)
-def pytest_report(item):
+def pytest_runtest_makereport(item):
     pytest_html = item.config.pluginmanager.getplugin("html")
     outcome = yield
     report = outcome.get_result()
@@ -77,7 +78,7 @@ def pytest_configure(config):
 
 
 @pytest.hookimpl(trylast=True)
-def pytest_session_finish(session):
+def pytest_sessionfinish(session):
     file = session.config._htmlfile
     os.system("open " + str(file))
 
