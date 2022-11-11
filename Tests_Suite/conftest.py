@@ -83,7 +83,7 @@ def pytest_session_finish(session):
 
 
 # Read parameters from pytest Command Line
-def pytest_add_option(parser):
+def pytest_addoption(parser):
     parser.addoption(
         "--browser", action="store", default="chrome", help="Default browser"
     )
