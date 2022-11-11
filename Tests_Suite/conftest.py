@@ -7,6 +7,7 @@ from selenium.webdriver.firefox.options import Options as Firefox_Options
 import pytest
 import os
 
+
 driver = None
 
 
@@ -14,16 +15,11 @@ driver = None
 def init_driver(request):
     global driver
     print(driver)
-    """
-    browser_name = request.config.getoption("browser_name")
-    if browser_name == "chrome":
-    """
     try:
         if request.param == "chrome":
             print("-" * 6, request.param, "-" * 6)
             options = Chrome_Options()
             options.headless = True
-            options.add_argument("--disable-gpu")
             driver = webdriver.Chrome(
                 service=Service(executable_path=ChromeDriverManager().install()),
                 options=options,
@@ -50,7 +46,7 @@ def init_driver(request):
 
 # Add a screenshot to report when a test failed
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item):
+def pytest_report(item):
     pytest_html = item.config.pluginmanager.getplugin("html")
     outcome = yield
     report = outcome.get_result()
@@ -81,13 +77,13 @@ def pytest_configure(config):
 
 
 @pytest.hookimpl(trylast=True)
-def pytest_sessionfinish(session):
+def pytest_session_finish(session):
     file = session.config._htmlfile
     os.system("open " + str(file))
 
 
 # Read parameters from pytest Command Line
-def pytest_addoption(parser):
+def pytest_add_option(parser):
     parser.addoption(
         "--browser", action="store", default="chrome", help="Default browser"
     )
