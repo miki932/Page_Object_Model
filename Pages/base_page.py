@@ -91,7 +91,7 @@ class BasePage:
 
     def is_link_work(self, url):
         url_exists = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.url_matches(url)
+            EC.url_to_be(url)
         )
         return url_exists
 
