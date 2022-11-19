@@ -7,7 +7,6 @@ from selenium.webdriver.firefox.options import Options as Firefox_Options
 import pytest
 import os
 
-
 driver = None
 
 
@@ -72,19 +71,24 @@ def pytest_runtest_makereport(item):
 
 
 # fixture to automatically open the generated HTML Report in a browser.
+"""
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config):
     config._htmlfile = config._html.logfile
-
 
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session):
     file = session.config._htmlfile
     os.system("open " + str(file))
+"""
 
 
 # Read parameters from pytest Command Line
 def pytest_addoption(parser):
-    parser.addoption(
-        "--browser", action="store", default="chrome", help="Default browser"
-    )
+    """Parse the input variables from the cli"""
+    try:
+        parser.addoption(
+            "--browser", action="store", default="chrome", help="Default browser"
+        )
+    except ValueError as e:
+        print(e)

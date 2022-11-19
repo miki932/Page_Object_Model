@@ -5,8 +5,6 @@ import datetime
 class TestData:
     # You should insert here your credentials,
     # Notice: do not upload secret information to GitHub ! Be careful !
-    SAUCE_USERNAME = ""
-    SAUCE_ACCESS_KEY = ""
 
     BASE_URL = "https://www.saucedemo.com/"
     HOME_PAGE_URL = "https://www.saucedemo.com/inventory.html"
@@ -16,6 +14,14 @@ class TestData:
     INVALID_PASSWORD = "12345"
     TIMEOUT = 10
     TITLE = "Swag Labs"
+
+    # Sauce Labs configuration:
+    SAUCE_USERNAME = ""
+    SAUCE_ACCESS_KEY = ""
+
+    # Qase configuration:
+    QASE_API = "https://api.qase.io/v1"
+    QASE_TOKEN = ""
 
     # TEST_TITLE = ""
     # PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
