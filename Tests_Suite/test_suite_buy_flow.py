@@ -7,7 +7,6 @@ def test_buy_flow(init_driver):
     login_page = TestLogin(init_driver)
     # Assert login
     login_page.test_login()
-
     home_page = TestHome(init_driver)
     # Verify Twitter logo takes us to twitter
     home_page.test_logo(logo=homeLocator.TWITTER_LOGO, url=homeLocator.TWITTER_URL)

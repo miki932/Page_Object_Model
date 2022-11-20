@@ -1,3 +1,4 @@
+import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -6,6 +7,7 @@ from selenium.webdriver.chrome.options import Options as Chrome_Options
 from selenium.webdriver.firefox.options import Options as Firefox_Options
 import pytest
 import os
+
 
 driver = None
 
@@ -44,9 +46,59 @@ def init_driver(request):
         print(e)
 
 
-# Add a screenshot to report when a test failed
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    if rep.when == "call" and rep.failed:
+        mode = "a" if os.path.exists("failures") else "w"
+        try:
+            with open("failures", mode):
+                if "driver" in item.fixturenames:
+                    web_driver = item.funcargs["driver"]
+                else:
+                    print("Fail to take screen-shot")
+                    return
+            allure.attach(
+                web_driver.get_screenshot_as_png(),
+                name="screenshot",
+                attachment_type=allure.attachment_type.PNG,
+            )
+        except Exception as e:
+            print(f"Fail to take screen-shot: {e}")
+
+
+def pytest_addoption(parser):
+    """
+    Read parameters from pytest Command Line
+    Parse the input variables from the cli
+    """
+    try:
+        parser.addoption(
+            "--browser", action="store", default="firefox", help="Default browser"
+        )
+    except ValueError as e:
+        print(e)
+
+
+"""
+@pytest.hookimpl(trylast=True)
+def pytest_configure(config):
+    # fixture to automatically open the generated HTML Report in a browser.
+
+    config._htmlfile = config._html.logfile
+
+
+@pytest.hookimpl(trylast=True)
+def pytest_sessionfinish(session):
+    file = session.config._htmlfile
+    os.system("open " + file)
+    
+    
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
+    #Add a screenshot to report when a test failed
+    
     pytest_html = item.config.pluginmanager.getplugin("html")
     outcome = yield
     report = outcome.get_result()
@@ -67,28 +119,5 @@ def pytest_runtest_makereport(item):
                 )
                 # only add additional html on failure
                 extra.append(pytest_html.extras.html(html))
-        report.extra = extra
-
-
-# fixture to automatically open the generated HTML Report in a browser.
+        report.extra = extra    
 """
-@pytest.hookimpl(trylast=True)
-def pytest_configure(config):
-    config._htmlfile = config._html.logfile
-
-@pytest.hookimpl(trylast=True)
-def pytest_sessionfinish(session):
-    file = session.config._htmlfile
-    os.system("open " + str(file))
-"""
-
-
-# Read parameters from pytest Command Line
-def pytest_addoption(parser):
-    """Parse the input variables from the cli"""
-    try:
-        parser.addoption(
-            "--browser", action="store", default="chrome", help="Default browser"
-        )
-    except ValueError as e:
-        print(e)
