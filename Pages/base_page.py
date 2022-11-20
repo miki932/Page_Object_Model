@@ -2,8 +2,7 @@ from selenium.common import TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from config import TestData
-import logging
+from Configs.config import TestData
 
 
 class BasePage:

@@ -1,9 +1,7 @@
-import time
-
 from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
-from config import TestData
+from Configs.config import TestData
 
 
 class TestHome(BasePage):

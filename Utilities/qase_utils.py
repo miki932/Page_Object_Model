@@ -2,7 +2,7 @@ import qaseio
 from qaseio.api import results_api
 from qaseio.model.result_create import ResultCreate
 
-from config import TestData
+from Configs.config import TestData
 
 configuration = qaseio.Configuration(host=TestData.QASE_API)
 
