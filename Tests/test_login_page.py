@@ -1,7 +1,7 @@
 from Pages.base_page import BasePage
 from Pages.login_page import LoginPage
 from Locators.login_page_locators import LoginLocators
-from Configs.config import TestData
+from Configurations.config import TestData
 
 
 class TestLogin(BasePage):

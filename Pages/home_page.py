@@ -1,4 +1,4 @@
-from Configs.config import TestData
+from Configurations.config import TestData
 from Pages.base_page import BasePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
 from selenium.webdriver.support.ui import Select
