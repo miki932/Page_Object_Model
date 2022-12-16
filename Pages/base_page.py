@@ -7,46 +7,34 @@ from Configurations.config import TestData
 
 class BasePage:
     """
-    The Base_Page class is a parent of all pages & holds all common
-    functionality across the website.
-
-    # TODO: custom logger.
-    # TODO: get element func.
-    # TODO: Jenkins integration.
-    # TODO: TestPlan management integration.
-    # TODO: Wrap all in Docker.
-    # TODO: Run test in parallel.
-    # TODO: Allure integration.
-    # TODO: Add option from command line (chrome, firefox).
-    # TODO: Pytest - Separate to regression/sanity etc.
+    The Base_Page class is a parent of all pages
+    that holds all common functionality across the website.
     """
 
     def __init__(self, driver):
         self.driver = driver
-        self.highlight_flag = False
 
     # Basic actions
-    def get_element(self, locator):
+    def get_element(self, *locator):
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(locator)
+            EC.visibility_of_element_located(*locator)
         )
         element = self.driver.find_element(*locator)
-        return element
+        return element.text
 
-    def click(self, locator):
+    def click(self, *locator):
         """Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.element_to_be_clickable(locator)
+            EC.element_to_be_clickable(*locator)
         ).click()
 
     def send_text(self, locator, text):
-        """Performs text entry of the passed in text, in a web element whose locator is passed to it"""
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.visibility_of_element_located(locator)
         ).send_keys(text)
 
-    def hover(self, locator):
-        element = self.driver.find_element(locator)
+    def hover(self, *locator):
+        element = self.driver.find_element(*locator)
         hover = ActionChains(self.driver).move_to_element(element)
         hover.perform()
 
@@ -76,9 +64,9 @@ class BasePage:
             print("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
         return self.driver.title
 
-    def is_visible(self, locator) -> bool:
+    def is_visible(self, *locator) -> bool:
         element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(locator)
+            EC.visibility_of_element_located(*locator)
         )
         return bool(element)
 
@@ -152,10 +140,10 @@ class BasePage:
         get_url = self.driver.current_url
         print("The current url is:" + str(get_url))
 
-    def is_disappeared(self, locator, timeout=TestData.TIMEOUT):
+    def is_disappeared(self, *locator, timeout=TestData.TIMEOUT):
         try:
             WebDriverWait(self.driver, timeout, 1, TestData.TIMEOUT).until_not(
-                EC.presence_of_element_located(locator)
+                EC.presence_of_element_located(*locator)
             )
         except TimeoutException:
             return False
@@ -439,4 +427,18 @@ class Logger(logging.Logger):
         file_handler.setLevel(logger_level)
         file_handler.setFormatter(formatter)
         self.addHandler(file_handler)
+        
+        
+        
+    # TODO: custom logger.
+    # TODO: get element func.
+    # TODO: Jenkins integration.
+    # TODO: TestPlan management integration.
+    # TODO: Wrap all in Docker.
+    # TODO: Run test in parallel.
+    # TODO: Allure integration.
+    # TODO: Add option from command line (chrome, firefox).
+    # TODO: Pytest - Separate to regression/sanity etc.
+    
+
 """

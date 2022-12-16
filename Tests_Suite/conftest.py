@@ -9,6 +9,31 @@ import pytest
 import os
 
 
+def pytest_addoption(parser):
+    """
+    ADD parameters to pytest Command Line
+    """
+    try:
+        parser.addoption(
+            "--browser",
+            action="store",
+            default="chrome",
+            choices=("chrome", "firefox"),
+            help="Choose browser, chrome(default) OR firefox",
+        )
+    except ValueError as e:
+        print(e)
+
+
+@pytest.fixture
+def cmdopt(request):
+    """
+    Retrieve the value of a command line option
+    """
+    browser = request.config.getoption("--browser")
+    return browser
+
+
 driver = None
 
 
@@ -17,21 +42,22 @@ def init_driver(request):
     global driver
     print(driver)
     try:
-        if request.param == "chrome":
-            print("-" * 6, request.param, "-" * 6)
+        browser = request.config.getoption("browser").strip().lower()
+        print("-" * 6, browser, "-" * 6)
+        if browser == "chrome":
             options = Chrome_Options()
-            options.headless = True
-            options.add_argument("--disable-gpu")
+            # options.headless = True
+            # options.add_argument("--disable-gpu")
             driver = webdriver.Chrome(
                 service=Service(executable_path=ChromeDriverManager().install()),
                 options=options,
             )
             request.driver = driver
 
-        elif request.param == "firefox":
-            print("-" * 6, request.param, "-" * 6)
+        elif browser == "firefox":
             options = Firefox_Options()
             # options.headless = True
+            # options.add_argument("--disable-gpu")
             driver = webdriver.Firefox(
                 service=Service(executable_path=GeckoDriverManager().install()),
                 options=options,
@@ -39,7 +65,7 @@ def init_driver(request):
             request.driver = driver
 
         yield driver
-        print(f"------Tear Down {request.param}------")
+        print(f"------Tear Down {browser}------")
         driver.quit()
         print("**** Test Completed ****")
     except Exception as e:
@@ -66,19 +92,6 @@ def pytest_runtest_makereport(item, call):
             )
         except Exception as e:
             print(f"Fail to take screen-shot: {e}")
-
-
-def pytest_addoption(parser):
-    """
-    Read parameters from pytest Command Line
-    Parse the input variables from the cli
-    """
-    try:
-        parser.addoption(
-            "--browser", action="store", default="firefox", help="Default browser"
-        )
-    except ValueError as e:
-        print(e)
 
 
 """

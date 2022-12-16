@@ -23,7 +23,8 @@ class TestHome(BasePage):
     def test_shopping_badge_cart(self):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
         self.home_page.click(homeLocator.ADD_TO_CART)
-        cart_counter = self.home_page.get_element(homeLocator.SHOPPING_CART_BADGE).text
+        cart_counter = self.home_page.get_element(homeLocator.SHOPPING_CART_BADGE)
+        print(f"******{cart_counter}*******")
         assert int(cart_counter) == 1
         assert self.home_page.is_visible(homeLocator.IMAGE_ITEM)
 
@@ -40,12 +41,3 @@ class TestHome(BasePage):
     def test_logout_btn(self):
         self.home_page.go_to_logout()
         assert self.get_url() == TestData.BASE_URL
-
-
-# if __name__ == '__main__':
-#     driver = webdriver.Chrome(
-#             service=Service(executable_path=ChromeDriverManager().install()))
-#     obj = TestHome()
-#     obj.test_shopping_badge_cart()
-#     driver.close()
-#     driver.quit()

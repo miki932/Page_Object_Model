@@ -1,5 +1,4 @@
 import os
-import datetime
 
 
 class TestData:
@@ -22,9 +21,10 @@ class TestData:
     # Qase configuration:
     QASE_API = "https://api.qase.io/v1"
     QASE_TOKEN = ""
-
+    RUN_ID = ""
     # TEST_TITLE = ""
-    # PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    print(PROJECT_ROOT_DIR)
     # LOG_DIR = PROJECT_ROOT_DIR + "/logs/"
     # REPORT_DIR = PROJECT_ROOT_DIR + "/reports/"
     # DATA_DIR = PROJECT_ROOT_DIR + "/data/"

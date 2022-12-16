@@ -11,10 +11,6 @@ class TestLogin(BasePage):
         self.base_url = base_url
         self.login_page = LoginPage(driver)
 
-    def test_login_page_title(self):
-        title = self.login_page.get_login_title(LoginLocators.LOGIN_PAGE_TITLE)
-        assert title == LoginLocators.LOGIN_PAGE_TITLE
-
     def test_login(self):
         self.login_page.do_login(TestData.USER_NAME, TestData.PASSWORD)
         current_url = self.login_page.get_url()
@@ -26,3 +22,7 @@ class TestLogin(BasePage):
         )
         err_msg = self.login_page.is_visible(LoginLocators.ERROR_MESSAGE)
         assert err_msg
+
+    def test_login_page_title(self):
+        title = self.login_page.get_login_title(LoginLocators.LOGIN_PAGE_TITLE)
+        assert title == LoginLocators.LOGIN_PAGE_TITLE

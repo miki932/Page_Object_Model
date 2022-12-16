@@ -19,11 +19,13 @@ class HomePageLocators:
     )
     ITEM_FOR_SALE_2 = (
         By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_0_title_link"]',
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]'
+        '//*[@class="inventory_item"]//*[@id="item_0_title_link"]',
     )
     ITEM_FOR_SALE_3 = (
         By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_1_title_link"]',
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]'
+        '//*[@class="inventory_item"]//*[@id="item_1_title_link"]',
     )
     ITEM_FOR_SALE_4 = (
         By.XPATH,
