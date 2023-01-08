@@ -37,7 +37,7 @@ def cmdopt(request):
 driver = None
 
 
-@pytest.fixture(params=["chrome"], scope="session")
+@pytest.fixture(scope="session")
 def init_driver(request):
     global driver
     print(driver)

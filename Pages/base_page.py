@@ -14,7 +14,6 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    # Basic actions
     def get_element(self, *locator):
         WebDriverWait(self.driver, TestData.TIMEOUT).until(
             EC.visibility_of_element_located(*locator)
@@ -38,13 +37,16 @@ class BasePage:
         hover = ActionChains(self.driver).move_to_element(element)
         hover.perform()
 
-    def execute_script(self, script):
+    def execute_javascript(self, js_script):
         """
-        Execute JavaScript using web driver on selected web element
+        Execute JavaScript
         :param: Javascript to be executed
         :return: None / depends on Script
         """
-        return self.execute_script(script)
+        try:
+            self.driver.execute_script(js_script)
+        except Exception as e:
+            print(e)
 
     def highlight_web_element(self, element):
         """
@@ -85,7 +87,7 @@ class BasePage:
     def switch_tab(self):
         """
         I`m Not using this function anymore,
-        Because the function `switch_window` (belows) is a better approach from my point of view,
+        Because the function `switch_window` (below) is a better approach from my point of view,
         Because I can handle whatever specific window I want (index), but both are ok and work well.
         """
         original_window = self.driver.current_window_handle
@@ -148,13 +150,6 @@ class BasePage:
         except TimeoutException:
             return False
         return True
-
-    def execute_javascript(self, js_script, *args):
-        """Execute JavaScript"""
-        try:
-            self.driver.execute_script(js_script)
-        except Exception as e:
-            print(e)
 
     def turn_on_highlight(self):
         """Highlight the elements being operated upon"""
@@ -429,16 +424,13 @@ class Logger(logging.Logger):
         self.addHandler(file_handler)
         
         
-        
+
     # TODO: custom logger.
     # TODO: get element func.
-    # TODO: Jenkins integration.
     # TODO: TestPlan management integration.
     # TODO: Wrap all in Docker.
     # TODO: Run test in parallel.
     # TODO: Allure integration.
-    # TODO: Add option from command line (chrome, firefox).
     # TODO: Pytest - Separate to regression/sanity etc.
-    
 
 """
