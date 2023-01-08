@@ -4,5 +4,5 @@ webdriver-manager~=3.8.5
 pytest-html~=3.2.0
 pytest-xdist~=3.1.0
 allure-pytest~=2.12.0
-pre-commit~=2.20.0
+pre-commit~=2.21.0
 qaseio~=3.1.0
