@@ -24,7 +24,6 @@ class TestData:
     RUN_ID = ""
     # TEST_TITLE = ""
     PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    print(PROJECT_ROOT_DIR)
     # LOG_DIR = PROJECT_ROOT_DIR + "/logs/"
     # REPORT_DIR = PROJECT_ROOT_DIR + "/reports/"
     # DATA_DIR = PROJECT_ROOT_DIR + "/data/"
