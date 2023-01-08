@@ -13,10 +13,6 @@ class HomePage(BasePage):
     def add_to_cart(self, by_locator):
         self.click(by_locator)
 
-    def sort_btn(self, value):
-        select = Select(homeLocator.SORT_BTN)
-        select.select_by_value(value)
-
     def go_to_cart(self, by_locator):
         self.click(by_locator)
 

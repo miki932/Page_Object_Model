@@ -48,16 +48,6 @@ class BasePage:
         except Exception as e:
             print(e)
 
-    def highlight_web_element(self, element):
-        """
-        To highlight webElement
-        :param: WebElement
-        :return: None
-        """
-        self.driver.execute_script(
-            "arguments[0].style.border='2px ridge #33ffff'", element
-        )
-
     def get_title(self, title) -> str:
         """Returns the title of the page"""
         try:
@@ -138,10 +128,6 @@ class BasePage:
         )[0]
         self.driver.switch_to.window(another_window)
 
-    def print_current_url(self):
-        get_url = self.driver.current_url
-        print("The current url is:" + str(get_url))
-
     def is_disappeared(self, *locator, timeout=TestData.TIMEOUT):
         try:
             WebDriverWait(self.driver, timeout, 1, TestData.TIMEOUT).until_not(
@@ -151,94 +137,9 @@ class BasePage:
             return False
         return True
 
-    def turn_on_highlight(self):
-        """Highlight the elements being operated upon"""
-        self.highlight_flag = True
-
-    def turn_off_highlight(self):
-        """Turn off the highlighting feature"""
-        self.highlight_flag = False
-
 
 """
-    def check_element_displayed(self, locator):
-        # This method checks if the web element is present in page or not and returns True or False accordingly
 
-        result_flag = False
-        try:
-            if self.get_element(locator) is not None:
-                element = self.get_element(locator, verbose_flag=False)
-                if element.is_displayed() is True:
-                    result_flag = True
-        except Exception as e:
-            self.write(e)
-            self.exceptions.append(
-                "Web element not present in the page, please check the"
-                f" locator is correct - {locator} in the conf/locators.conf file"
-            )
-
-        return result_flag
-
-    def check_element_present(self, locator):
-        # This method checks if the web element is present in page or not and returns True or False accordingly
-        result_flag = False
-        if self.get_element(locator, verbose_flag=False) is not None:
-            result_flag = True
-
-        return result_flag
-
-    def find_element_in_page(self, locator, locatorType="id"):
-        element = None
-        try:
-            locatorType = locatorType.lower()
-            byType = self.getByType(locatorType)
-            element = self.driver.find_element(byType, locator)
-            self.log.info("Element found with locator: " + locator + " and  locatorType: " + locatorType)
-        except:
-            self.log.info("Element not found with locator: " + locator + " and  locatorType: " + locatorType)
-        return element
-        
-    def is_element_present(self, how, what):
-        try:
-            self.browser.find_element(how, what)
-        except NoSuchElementException:
-            return False
-        return True
-        
-    def is_disappeared(self, how, what, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((how, what)))
-        except TimeoutException:
-            return False
-    
-        return True
-            
-        import csv
-    def getCSVData(fileName):
-        # create an empty list to store rows
-        rows = []
-        # open the CSV file
-        dataFile = open(fileName, "r")
-        # create a CSV Reader from CSV file
-        reader = csv.reader(dataFile)
-        # skip the headers
-        next(reader)
-        # add rows from reader to list
-        for row in reader:
-            rows.append(row)
-        return rows
-        
-
-    def verify_title(self):
-        if self.get_title() == 'Google':
-            return True
-        else:
-            return False
-           
-    markers =
-        regression:
-        sanity: 
-    
     import logging
     
     class LogGen:
@@ -282,19 +183,6 @@ class BasePage:
         logger.addHandler(fileHandler)
     
         return logger
-    
-    
-    def is_disappeared(self, how, what, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
-                until_not(EC.presence_of_element_located((how, what)))
-        except TimeoutException:
-            return False
-        return True
-        
-    def select_drop_down(self, by_locator, text):
-        select = Select(self.driver.find_element(*by_locator))
-        select.select_by_visible_text(text)
         
     def get_element_text(self, by_locator):
         return WebDriverWait(self.driver, 1).until(ec.presence_of_element_located(by_locator)).text
@@ -320,35 +208,6 @@ class BasePage:
         except Exception as e:
             self.logger.error(f'Error when process alert')
             self.logger.exception(e) 
-              
-    def double_click(self, locator):
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(locator)
-        ).double_click(self, locator)
-
-    def switch_alert(self):
-        try:
-            alert = self.driver.switch_to.alert
-        except Exception as e:
-            self.logger.error(f"Error when switching alert pop")
-            self.logger.exception(e)
-        else:
-            return alert
-            
-               def alert_process(self, process, message=None):
-        try:
-            alert = self.switch_alert()
-            if process == "accept":
-                alert.accept()
-            elif process == "dismiss":
-                alert.dismiss()
-            elif process == "message":
-                alert.send_keys(message)
-        except Exception as e:
-            self.logger.error(f"Error when process alert")
-            self.logger.exception(e)
-            
-            
 
 import os, sys
 sys.path.append(os.getcwd())
@@ -424,7 +283,6 @@ class Logger(logging.Logger):
         self.addHandler(file_handler)
         
         
-
     # TODO: custom logger.
     # TODO: get element func.
     # TODO: TestPlan management integration.
