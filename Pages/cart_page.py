@@ -5,6 +5,7 @@ from Locators.cart_page_locators import CartPageLocators
 class CartPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+        self.driver = driver
         self.driver.get(CartPageLocators.CART_PAGE_URL)
 
     # Page Actions:
