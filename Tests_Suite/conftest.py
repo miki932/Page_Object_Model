@@ -18,7 +18,7 @@ def pytest_addoption(parser):
             "--browser",
             action="store",
             default="chrome",
-            choices=("chrome", "firefox"),
+            choices=("chrome", "firefox", "headless"),
             help="Choose browser, chrome(default) OR firefox",
         )
     except ValueError as e:
@@ -48,6 +48,16 @@ def init_driver(request):
             options = Chrome_Options()
             # options.headless = True
             # options.add_argument("--disable-gpu")
+            driver = webdriver.Chrome(
+                service=Service(executable_path=ChromeDriverManager().install()),
+                options=options,
+            )
+            request.driver = driver
+
+        if browser == "headless":
+            options = Chrome_Options()
+            options.headless = True
+            options.add_argument("--disable-gpu")
             driver = webdriver.Chrome(
                 service=Service(executable_path=ChromeDriverManager().install()),
                 options=options,

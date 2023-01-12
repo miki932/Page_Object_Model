@@ -3,8 +3,10 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from Configurations.config import TestData
+import pytest
 
 
+@pytest.mark.usefixtures("init_driver")
 class BasePage:
     """
     The Base_Page class is a parent of all pages
@@ -13,24 +15,21 @@ class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, TestData.TIMEOUT)
 
     def get_element(self, *locator):
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(*locator)
-        )
+        self.wait.until(EC.visibility_of_element_located(*locator))
         element = self.driver.find_element(*locator)
         return element.text
 
     def click(self, *locator):
-        """Performs click on web element whose locator is passed to it"""
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.element_to_be_clickable(*locator)
-        ).click()
+        self.wait.until(EC.element_to_be_clickable(*locator)).click()
 
     def send_text(self, locator, text):
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(locator)
-        ).send_keys(text)
+        self.wait.until(EC.visibility_of_element_located(locator)).send_keys(text)
+
+    def get_text(self, locator):
+        self.wait.until(EC.visibility_of_element_located(locator))
 
     def hover(self, *locator):
         element = self.driver.find_element(*locator)
@@ -51,15 +50,13 @@ class BasePage:
     def get_title(self, title) -> str:
         """Returns the title of the page"""
         try:
-            WebDriverWait(self.driver, TestData.TIMEOUT).until(EC.title_is(title))
+            self.wait.until(EC.title_is(title))
         except TimeoutException:
             print("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
         return self.driver.title
 
     def is_visible(self, *locator) -> bool:
-        element = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.visibility_of_element_located(*locator)
-        )
+        element = self.wait.until(EC.visibility_of_element_located(*locator))
         return bool(element)
 
     def get_url(self) -> str:
@@ -69,9 +66,7 @@ class BasePage:
         pass
 
     def is_link_work(self, url):
-        url_exists = WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.url_to_be(url)
-        )
+        url_exists = self.wait.until(EC.url_to_be(url))
         return url_exists
 
     def switch_tab(self):
@@ -81,9 +76,8 @@ class BasePage:
         Because I can handle whatever specific window I want (index), but both are ok and work well.
         """
         original_window = self.driver.current_window_handle
-        WebDriverWait(self.driver, TestData.TIMEOUT).until(
-            EC.number_of_windows_to_be(2)
-        )
+        self.wait.until(EC.number_of_windows_to_be(2))
+
         # Loop through until we find a new window handle
         for window_handle in self.driver.window_handles:
             if window_handle != original_window:
