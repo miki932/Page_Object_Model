@@ -7,4 +7,5 @@ class LoginLocators:
     EMAIL = (By.ID, "user-name")
     PASSWORD = (By.ID, "password")
     LOGIN_BUTTON = (By.ID, "login-button")
-    ERROR_MESSAGE = (By.XPATH, "//div[@class='error-message-container error']")
+    LOCKED_OUT_ERROR_MESSAGE = (By.CSS_SELECTOR, "h3[data-test='error']")
+    BAD_PASSWORD_OR_USERNAME_ERROR = (By.CSS_SELECTOR, "h3[data-test='error']")
