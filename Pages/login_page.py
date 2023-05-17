@@ -1,4 +1,4 @@
-from Configurations.config import TestData
+from Configurations import config
 from Pages.base_page import BasePage
 from Locators.login_page_locators import LoginLocators
 
@@ -7,7 +7,7 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
-        self.driver.get(TestData.BASE_URL)
+        self.driver.get(config.BASE_URL)
 
     # Page Actions:
     def get_login_title(self, title):
@@ -24,4 +24,4 @@ class LoginPage(BasePage):
         self.click(LoginLocators.LOGIN_BUTTON)
 
     def go_to(self):
-        self.driver.get(TestData.BASE_URL)
+        self.driver.get(config.BASE_URL)

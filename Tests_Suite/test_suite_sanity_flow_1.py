@@ -9,3 +9,24 @@ class TestBuy:
         test_home_page.test_facebook_logo()
         # test_home_page.test_linkedin_logo()
         # test_home_page.test_shopping_badge_cart()
+
+
+"""
+from Tests import test_home_page
+
+
+def test_login():
+    test_home_page.test
+
+
+def test_twitter():
+    test_home_page.test_twitter_logo()
+
+
+def test_linkedin_logo():
+    test_home_page.test_linkedin_logo()
+
+
+def test_shopping():
+    test_home_page.test_shopping_badge_cart()
+"""

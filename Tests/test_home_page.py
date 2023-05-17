@@ -1,11 +1,11 @@
 from Pages.base_page import BasePage
 from Pages.home_page import HomePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
-from Configurations.config import TestData
+from Configurations import config
 
 
 class TestHome(BasePage):
-    def __init__(self, driver, base_url=TestData.HOME_PAGE_URL):
+    def __init__(self, driver, base_url=config.HOME_PAGE_URL):
         super().__init__(driver)
         self.driver = driver
         self.base_url = base_url
@@ -32,7 +32,8 @@ class TestHome(BasePage):
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_1)
         self.home_page.add_to_cart(homeLocator.ITEM_FOR_SALE_2)
         self.home_page.click(homeLocator.REMOVE_FROM_CART)
-        assert homeLocator.SHOPPING_CART_BADGE == 1
+        cart_counter = self.home_page.get_element(homeLocator.SHOPPING_CART_BADGE)
+        assert int(cart_counter) == 1
 
     def test_go_to_about_page(self):
         self.home_page.go_to_about_page()
@@ -40,4 +41,4 @@ class TestHome(BasePage):
 
     def test_logout_btn(self):
         self.home_page.go_to_logout()
-        assert self.get_url() == TestData.BASE_URL
+        assert self.home_page.get_url() == config.BASE_URL
