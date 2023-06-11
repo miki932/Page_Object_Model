@@ -1,8 +1,10 @@
+import pytest
 from Locators.home_page_locators import HomePageLocators as homeLocator
 from Tests.test_home_page import TestHome
 from Tests.test_login_page import TestLogin
 
 
+@pytest.mark.qase_case_id("CASE_ID")
 def test_buy_flow(init_driver):
     login_page = TestLogin(init_driver)
     # Assert login

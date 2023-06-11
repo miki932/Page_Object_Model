@@ -10,6 +10,7 @@ from Pages.login_page import LoginPage
 import allure
 import pytest
 import os
+from Utilities.qase_api import create_test_run, add_test_case_result
 
 
 def pytest_addoption(parser):
@@ -93,7 +94,7 @@ def init_driver(request):
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item):
     outcome = yield
     rep = outcome.get_result()
     if rep.when == "call" and rep.failed:
@@ -118,6 +119,30 @@ def pytest_runtest_makereport(item, call):
                     )
         except Exception as e:
             print(f"Failed to take a screenshot: {e}")
+
+
+@pytest.fixture(scope="session")
+def qase_test_run():
+    """Pytest fixture to create a test run before test execution"""
+    test_run_id = create_test_run(
+        "Automated Test Run", "This is a test run created from automation"
+    )
+    yield test_run_id
+
+
+def pytest_runtest_protocol(item):
+    """Pytest hook to update test case results after each test"""
+    outcome = yield
+    result = outcome.get_result()
+    if result.outcome == "passed":
+        status = "passed"
+    elif result.outcome == "failed":
+        status = "failed"
+    else:
+        status = "blocked"
+    test_run_id = item.session.config.qase_test_run
+    case_id = item.get_closest_marker("qase_case_id").args[0]
+    add_test_case_result(test_run_id, case_id, status)
 
 
 """

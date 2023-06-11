@@ -1,4 +1,4 @@
-from Configurations.config import TestData
+from Configurations import config
 from Pages.base_page import BasePage
 from Locators.home_page_locators import HomePageLocators as homeLocator
 
@@ -7,7 +7,7 @@ class HomePage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
-        self.driver.get(TestData.HOME_PAGE_URL)
+        self.driver.get(config.HOME_PAGE_URL)
 
     # Page Actions:
     def add_to_cart(self, by_locator):

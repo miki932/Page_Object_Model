@@ -1,6 +1,8 @@
+import pytest
 from Tests.test_login_page import TestLogin
 
 
+@pytest.mark.qase_case_id("CASE_ID")
 class TestLoginSanity:
     def test_suite_sanity(self, init_driver):
         test_login = TestLogin(init_driver)
