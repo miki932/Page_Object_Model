@@ -78,9 +78,9 @@ def init_driver(request):
                 options=options,
             )
 
-        request.cls.cart_page = CartPage(driver)
-        request.cls.home_page = HomePage(driver)
-        request.cls.login_page = LoginPage(driver)
+        # request.cls.cart_page = CartPage(driver)
+        # request.cls.home_page = HomePage(driver)
+        # request.cls.login_page = LoginPage(driver)
 
         yield driver
         print(f"------Tear Down {browser}------")

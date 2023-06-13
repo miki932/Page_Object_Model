@@ -16,7 +16,7 @@ class TestLogin:
         err_msg = self.login_page.is_visible(
             LoginLocators.BAD_PASSWORD_OR_USERNAME_ERROR
         )
-        assert err_msg
+        assert err_msg is True, "Invalid login error message is not displayed"
 
     def test_login_page_title(self, init_driver):
         self.login_page = LoginPage(init_driver)

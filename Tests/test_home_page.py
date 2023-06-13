@@ -6,13 +6,12 @@ from Configurations import config
 class TestHome:
     def test_logo(self, init_driver, logo, url):
         self.home_page = HomePage(init_driver)
-        # Store the ID of the original window
-        original_window = self.driver.current_window_handle
+        original_window = self.home_page.get_current_window_handle()
         self.home_page.click(logo)
-        self.home_page.switch_window(1)
-        assert self.is_link_work(url)
-        self.driver.close()
-        self.driver.switch_to.window(original_window)
+        self.home_page.switch_to_window(1)
+        assert self.home_page.is_link_work(url)
+        self.home_page.close_current_window()
+        self.home_page.switch_to_window(original_window)
 
     def test_shopping_badge_cart(self, init_driver):
         self.home_page = HomePage(init_driver)
