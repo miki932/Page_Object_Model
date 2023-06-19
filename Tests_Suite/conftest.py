@@ -4,9 +4,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options as Chrome_Options
 from selenium.webdriver.firefox.options import Options as Firefox_Options
-from Pages.cart_page import CartPage
-from Pages.home_page import HomePage
-from Pages.login_page import LoginPage
 import allure
 import pytest
 import os

@@ -1,9 +1,9 @@
+import pytest
 from selenium.common import TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from Configurations import config
-import pytest
 
 
 @pytest.mark.usefixtures("init_driver")
@@ -55,8 +55,8 @@ class BasePage:
             print("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
         return self.driver.title
 
-    def is_visible(self, *locator) -> bool:
-        element = self.wait.until(EC.visibility_of_element_located(*locator))
+    def is_visible(self, locator) -> bool:
+        element = self.wait.until(EC.visibility_of_element_located(locator))
         return bool(element)
 
     def get_url(self) -> str:
