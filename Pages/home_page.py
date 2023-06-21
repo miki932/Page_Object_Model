@@ -1,9 +1,66 @@
+from selenium.webdriver.common.by import By
 from Pages.base_page import BasePage
-from Locators.home_page_locators import HomePageLocators as homeLocator
 
 
 class HomePage(BasePage):
+    # Locators:
+    # Object Repository:
+    SHOPPING_CART = (By.ID, "shopping_cart_container")
+    SHOPPING_CART_BADGE = (By.CLASS_NAME, "shopping_cart_badge")
+    BURGER_MENU = (By.ID, "react-burger-menu-btn")
+    SORT_BTN = (By.CLASS_NAME, "active_option")
+    BACK_TO_PRODUCT = (By.ID, "back-to-products")
+    ADD_TO_CART = (By.ID, "add-to-cart-sauce-labs-backpack")
+    REMOVE_FROM_CART = (By.ID, "remove-sauce-labs-backpack")
+    IMAGE_ITEM = (By.CLASS_NAME, "inventory_details_img_container")
+
+    ITEM_FOR_SALE_1 = (
+        By.XPATH,
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]'
+        '//*[@id="item_4_title_link"]//*[@class="inventory_item_name"]',
+    )
+    ITEM_FOR_SALE_2 = (
+        By.XPATH,
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]'
+        '//*[@class="inventory_item"]//*[@id="item_0_title_link"]',
+    )
+    ITEM_FOR_SALE_3 = (
+        By.XPATH,
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]'
+        '//*[@class="inventory_item"]//*[@id="item_1_title_link"]',
+    )
+    ITEM_FOR_SALE_4 = (
+        By.XPATH,
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_2_title_link"]',
+    )
+    ITEM_FOR_SALE_5 = (
+        By.XPATH,
+        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_3_title_link"]',
+    )
+
+    # Footer
+    TWITTER_LOGO = (
+        By.XPATH,
+        '//*[@class="footer"]//*[@class="social"]//*[@class="social_twitter"]',
+    )
+    FACEBOOK_LOGO = (
+        By.XPATH,
+        '//*[@class="footer"]//*[@class="social"]//*[@class="social_facebook"]',
+    )
+
+    TWITTER_URL = "https://twitter.com/saucelabs"
+    FACEBOOK_URL = "https://www.facebook.com/saucelabs"
+    CART_PAGE_URL = "https://www.saucedemo.com/cart.html"
+
+    # Burger Button
+    ABOUT_PAGE = (By.ID, "about_sidebar_link")
+    ABOUT_PAGE_URL = "https://saucelabs.com/"
+    LOGOUT_BTN = (By.ID, "logout_sidebar_link")
+
     # Page Actions:
+    def __init__(self, driver):
+        super().__init__(driver)
+
     def add_to_cart(self, by_locator):
         self.click(by_locator)
 
@@ -11,9 +68,9 @@ class HomePage(BasePage):
         self.click(by_locator)
 
     def go_to_about_page(self):
-        self.click(homeLocator.BURGER_MENU)
-        self.click(homeLocator.ABOUT_PAGE)
+        self.click(HomePage.BURGER_MENU)
+        self.click(HomePage.ABOUT_PAGE)
 
     def go_to_logout(self):
-        self.click(homeLocator.BURGER_MENU)
-        self.click(homeLocator.LOGOUT_BTN)
+        self.click(HomePage.BURGER_MENU)
+        self.click(HomePage.LOGOUT_BTN)

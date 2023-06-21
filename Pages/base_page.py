@@ -69,6 +69,9 @@ class BasePage:
         url_exists = self.wait.until(EC.url_to_be(url))
         return url_exists
 
+    def get_current_window_handle(self):
+        return self.driver.current_window_handle
+
     def switch_tab(self):
         """
         I`m Not using this function anymore,
