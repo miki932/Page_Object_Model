@@ -7,23 +7,23 @@ class TestHome:
         home_page = HomePage(init_driver)
         original_window = home_page.get_current_window_handle()
         home_page.click(HomePage.TWITTER_LOGO)
-        home_page.switch_to_window(1)
+        home_page.switch_window(1)
         assert home_page.is_link_work(HomePage.TWITTER_URL)
-        home_page.close_current_window()
-        home_page.switch_to_window(original_window)
+        home_page.close_current_tab()
+        home_page.switch_window(original_window)
 
     def test_facebook_logo(self, init_driver):
         home_page = HomePage(init_driver)
         original_window = home_page.get_current_window_handle()
         home_page.click(HomePage.FACEBOOK_LOGO)
-        home_page.switch_to_window(1)
+        home_page.switch_window(1)
         assert home_page.is_link_work(HomePage.FACEBOOK_URL)
-        home_page.close_current_window()
+        home_page.close_current_tab()
         home_page.switch_to_window(original_window)
 
     def test_shopping_badge_cart(self, init_driver):
         home_page = HomePage(init_driver)
-        home_page.add_to_cart(HomePage.ITEM_FOR_SALE_1)
+        home_page.click(HomePage.TITLE_OF_ITEM_1)
         home_page.click(HomePage.ADD_TO_CART)
         cart_counter = home_page.get_element(HomePage.SHOPPING_CART_BADGE)
         assert int(cart_counter) == 1
@@ -31,8 +31,8 @@ class TestHome:
 
     def test_remove_from_cart(self, init_driver):
         home_page = HomePage(init_driver)
-        home_page.add_to_cart(HomePage.ITEM_FOR_SALE_1)
-        home_page.add_to_cart(HomePage.ITEM_FOR_SALE_2)
+        home_page.click(HomePage.BUTTON_ADD_TO_CART_ITEM_1)
+        home_page.click(HomePage.BUTTON_ADD_TO_CART_ITEM_2)
         home_page.click(HomePage.REMOVE_FROM_CART)
         cart_counter = home_page.get_element(HomePage.SHOPPING_CART_BADGE)
         assert int(cart_counter) == 1

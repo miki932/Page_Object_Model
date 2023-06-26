@@ -14,28 +14,18 @@ class HomePage(BasePage):
     REMOVE_FROM_CART = (By.ID, "remove-sauce-labs-backpack")
     IMAGE_ITEM = (By.CLASS_NAME, "inventory_details_img_container")
 
-    ITEM_FOR_SALE_1 = (
+    BUTTON_ADD_TO_CART_ITEM_1 = (
         By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]'
-        '//*[@id="item_4_title_link"]//*[@class="inventory_item_name"]',
+        "//button[@id='add-to-cart-sauce-labs-backpack']",
     )
-    ITEM_FOR_SALE_2 = (
+    BUTTON_ADD_TO_CART_ITEM_2 = (
         By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]'
-        '//*[@class="inventory_item"]//*[@id="item_0_title_link"]',
+        "//button[@id='add-to-cart-sauce-labs-bike-light']",
     )
-    ITEM_FOR_SALE_3 = (
-        By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]'
-        '//*[@class="inventory_item"]//*[@id="item_1_title_link"]',
-    )
-    ITEM_FOR_SALE_4 = (
-        By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_2_title_link"]',
-    )
-    ITEM_FOR_SALE_5 = (
-        By.XPATH,
-        '//*[@id="inventory_container"]//*[@class="inventory_list"]//*[@class="inventory_item"]//*[@id="item_3_title_link"]',
+
+    TITLE_OF_ITEM_1 = (
+        By.CSS_SELECTOR,
+        "a[id='item_4_title_link'] div[class='inventory_item_name']",
     )
 
     # Footer
@@ -60,12 +50,6 @@ class HomePage(BasePage):
     # Page Actions:
     def __init__(self, driver):
         super().__init__(driver)
-
-    def add_to_cart(self, by_locator):
-        self.click(by_locator)
-
-    def go_to_cart(self, by_locator):
-        self.click(by_locator)
 
     def go_to_about_page(self):
         self.click(HomePage.BURGER_MENU)

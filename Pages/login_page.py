@@ -16,10 +16,16 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    def go_to(self):
+        print("Navigating to:", config.BASE_URL)
+        self.driver.get(config.BASE_URL)
+
     def get_login_title(self, title):
         return self.get_title(title)
 
     def do_login(self, username, password):
+        print(self.driver)
+        self.go_to()
         self.send_text(LoginPage.EMAIL, username)
         self.send_text(LoginPage.PASSWORD, password)
         self.click(LoginPage.LOGIN_BUTTON)
@@ -28,6 +34,3 @@ class LoginPage(BasePage):
         self.send_text(LoginPage.EMAIL, username)
         self.send_text(LoginPage.PASSWORD, invalid_password)
         self.click(LoginPage.LOGIN_BUTTON)
-
-    def go_to(self):
-        self.driver.get(config.BASE_URL)

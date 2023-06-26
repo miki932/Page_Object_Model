@@ -27,4 +27,4 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run sanity suite
-      run: pytest Tests_Suite/test_suite_buy_flow.py
+      run: pytest Tests_Suite/test_suite_1.py
