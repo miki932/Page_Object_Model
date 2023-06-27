@@ -1,6 +1,5 @@
 from Pages.login_page import LoginPage
 from Configurations import config
-import pytest
 
 
 class TestLogin:

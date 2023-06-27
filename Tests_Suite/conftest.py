@@ -7,6 +7,7 @@ from selenium.webdriver.firefox.options import Options as Firefox_Options
 import allure
 import pytest
 import os
+import subprocess
 
 
 def pytest_addoption(parser):
@@ -75,10 +76,6 @@ def init_driver(request):
                 options=options,
             )
 
-        # request.cls.cart_page = CartPage(driver)
-        # request.cls.home_page = HomePage(driver)
-        # request.cls.login_page = LoginPage(driver)
-
         yield driver
         print(f"------Tear Down {browser}------")
 
@@ -87,6 +84,17 @@ def init_driver(request):
 
     except Exception as e:
         print(e)
+
+
+def pytest_sessionfinish(exitstatus, session):
+    if exitstatus == pytest.ExitCode.TESTS_FAILED:
+        return
+
+    # Specify the path to the Allure report directory
+    report_dir = "/Users/mtsioni/PycharmProjects/Page_Object_Model/Reports"
+
+    # Open the Allure report in the web browser
+    subprocess.run(["allure", "serve", report_dir], check=False)
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)

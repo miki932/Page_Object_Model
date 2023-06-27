@@ -1,11 +1,14 @@
-from Tests.test_home_page import TestHome
-from Tests.test_login_page import TestLogin
+from Tests import test_home_page as thp
+from Tests import test_login_page as tlp
+
+
+"This way is more 'Unit test way', in test_suite_2 I show how is the more aligned to be 'pytest' way"
 
 
 class TestSuiteBuyFlow:
     def setup_method(self):
-        self.test_home = TestHome()
-        self.test_login = TestLogin()
+        self.test_home = thp.TestHome()
+        self.test_login = tlp.TestLogin()
 
     def test_twitter_logo(self, init_driver):
         self.test_login.test_login(init_driver)

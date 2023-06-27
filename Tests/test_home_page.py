@@ -19,7 +19,7 @@ class TestHome:
         home_page.switch_window(1)
         assert home_page.is_link_work(HomePage.FACEBOOK_URL)
         home_page.close_current_tab()
-        home_page.switch_to_window(original_window)
+        home_page.switch_window(original_window)
 
     def test_shopping_badge_cart(self, init_driver):
         home_page = HomePage(init_driver)
