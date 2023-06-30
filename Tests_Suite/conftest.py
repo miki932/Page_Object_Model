@@ -60,9 +60,9 @@ def init_driver(request):
                 options=options,
             )
 
-        if browser == "headless":
+        elif browser == "headless":
             options = Chrome_Options()
-            options.headless = True
+            options.add_argument("--headless")
             options.add_argument("--disable-gpu")
             driver = webdriver.Chrome(
                 service=Service(executable_path=ChromeDriverManager().install()),
@@ -78,7 +78,6 @@ def init_driver(request):
 
         yield driver
         print(f"------Tear Down {browser}------")
-
         driver.quit()
         print("**** Test Completed ****")
 
