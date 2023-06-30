@@ -132,6 +132,7 @@ def pytest_configure(config):
     config._htmlfile = config._html.logfile
 
 
+
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session):
     file = session.config._htmlfile
