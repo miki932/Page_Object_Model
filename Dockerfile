@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM seleniarm/standalone-chromium
+FROM selenium/standalone-chrome
 
 # Set the working directory to /app
 WORKDIR /app
@@ -24,4 +24,4 @@ RUN pip install --trusted-host pypi.python.org --cache-dir=/pip-cache -r require
 EXPOSE 80
 
 # Run the test suite when the container launches
-CMD ["pytest", "Tests_Suite/test_suite_1.py", "--browser", "headless"]
+CMD ["pytest", "Tests_Suite/test_suite_2.py", "--browser", "headless"]

@@ -4,7 +4,6 @@ from Pages.base_page import BasePage
 
 class HomePage(BasePage):
     # Locators:
-    # Object Repository:
     SHOPPING_CART = (By.ID, "shopping_cart_container")
     SHOPPING_CART_BADGE = (By.CLASS_NAME, "shopping_cart_badge")
     BURGER_MENU = (By.ID, "react-burger-menu-btn")

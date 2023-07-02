@@ -44,14 +44,11 @@ def cmdopt(request):
     return browser
 
 
-driver = None
-
-
 @pytest.fixture
 def init_driver(request):
     global driver
     try:
-        browser = request.config.getoption("browser").strip().lower()
+        browser = request.config.getoption("--browser").strip().lower()
         print("-" * 6, browser, "-" * 6)
         if browser == "chrome":
             options = Chrome_Options()
