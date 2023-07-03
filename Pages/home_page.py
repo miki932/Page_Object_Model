@@ -37,7 +37,7 @@ class HomePage(BasePage):
         '//*[@class="footer"]//*[@class="social"]//*[@class="social_facebook"]',
     )
 
-    TWITTER_URL = "https://twitter.com/saucelabs"
+    TWITTER_URL = "https://twitter.com/i/flow/login?redirect_after_login=%2Fsaucelabs"
     FACEBOOK_URL = "https://www.facebook.com/saucelabs"
     CART_PAGE_URL = "https://www.saucedemo.com/cart.html"
 

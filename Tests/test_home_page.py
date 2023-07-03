@@ -1,3 +1,5 @@
+import time
+
 from Pages.home_page import HomePage
 from Configurations import config
 
@@ -5,12 +7,12 @@ from Configurations import config
 class TestHome:
     def test_twitter_logo(self, init_driver):
         home_page = HomePage(init_driver)
-        original_window = home_page.get_current_window_handle()
+        # original_window = home_page.get_current_window_handle()
         home_page.click(HomePage.TWITTER_LOGO)
-        home_page.switch_window(1)
+        # home_page.switch_window(1)
         assert home_page.is_link_work(HomePage.TWITTER_URL)
         home_page.close_current_tab()
-        home_page.switch_window(original_window)
+        # home_page.switch_window(original_window)
 
     def test_facebook_logo(self, init_driver):
         home_page = HomePage(init_driver)

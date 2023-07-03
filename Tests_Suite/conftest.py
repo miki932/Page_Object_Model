@@ -49,7 +49,7 @@ def init_driver(request):
     global driver
     try:
         browser = request.config.getoption("--browser").strip().lower()
-        print("-" * 6, browser, "-" * 6)
+        print("\n", "-" * 6, browser, "-" * 6)
         if browser == "chrome":
             options = Chrome_Options()
             driver = webdriver.Chrome(
@@ -72,24 +72,34 @@ def init_driver(request):
                 service=Service(executable_path=GeckoDriverManager().install()),
                 options=options,
             )
-
+        print(f"before yield {driver =}")
         yield driver
+        print(f"{driver =}")
         print(f"------Tear Down {browser}------")
         driver.quit()
         print("**** Test Completed ****")
 
     except Exception as e:
         print(e)
+        raise
 
 
 def pytest_sessionfinish(exitstatus, session):
     if exitstatus == pytest.ExitCode.TESTS_FAILED:
         return
 
-    # Specify the path to the Allure report directory
-    report_dir = "/Users/mtsioni/PycharmProjects/Page_Object_Model/Reports"
+    report_dir = os.environ.get("ALLURE_REPORT_DIR")
 
-    # Open the Allure report in the web browser
+    if report_dir is None:
+        raise ValueError(
+            "ALLURE_REPORT_DIR environment variable is not set,"
+            "If you have MacOS OR Linux:"
+            "- Open a terminal "
+            "- Use the export command to set the environment variable."
+            " For example:"
+            "export ALLURE_REPORT_DIR=/path/to/report/directory"
+        )
+
     subprocess.run(["allure", "serve", report_dir], check=False)
 
 
@@ -101,8 +111,8 @@ def pytest_runtest_makereport(item):
         mode = "a" if os.path.exists("failures") else "w"
         try:
             with open("failures", mode) as file:
-                if "driver" in item.fixturenames:
-                    web_driver = item.funcargs["driver"]
+                if "init_driver" in item.fixturenames:
+                    web_driver = item.funcargs["init_driver"]
                     # Take a screenshot using the WebDriver and save it
                     screenshot = web_driver.get_screenshot_as_png()
                     file.write("Failure details:\n")

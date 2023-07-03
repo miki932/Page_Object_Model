@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM selenium/standalone-chrome
+FROM notarize/selenium-chrome:2.0.114.0-20230615
 
 # Set the working directory to /app
 WORKDIR /app
