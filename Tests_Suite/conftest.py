@@ -5,7 +5,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options as Chrome_Options
 from selenium.webdriver.firefox.options import Options as Firefox_Options
 import pytest
-import os
 import subprocess
 
 
@@ -29,7 +28,6 @@ def pytest_addoption(parser):
             choices=("remote",),
             help="Choose environment that you want run the test, local OR remote",
         )
-
     except ValueError as e:
         print(e)
 
@@ -83,19 +81,9 @@ def init_driver(request):
         raise
 
 
-def pytest_sessionfinish(exitstatus, session):
-    if exitstatus == pytest.ExitCode.TESTS_FAILED:
-        return
+def pytest_sessionfinish(session, exitstatus):
+    # Retrieve the Allure report directory path from pytest.ini
+    allure_report_dir = session.config.getoption("--alluredir")
 
-    report_dir = os.environ.get("ALLURE_REPORT_DIR")
-    print(f"$$$$$$$${report_dir}$$$$$$$$$")
-    if report_dir is None:
-        raise ValueError(
-            "ALLURE_REPORT_DIR environment variable is not set,"
-            "If you have MacOS OR Linux:"
-            "- Open a terminal "
-            "- Use the export command to set the environment variable."
-            " For example:"
-            "export ALLURE_REPORT_DIR=/path/to/report/directory"
-        )
-    subprocess.run(["allure", "serve", report_dir], check=False)
+    # Open the Allure report using the Allure command-line tool
+    subprocess.run(["allure", "serve", allure_report_dir], check=False)
