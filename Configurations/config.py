@@ -16,3 +16,6 @@ TITLE = "Swag Labs"
 SAUCE_USERNAME = ""
 SAUCE_ACCESS_KEY = ""
 PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# QASE API
+URL_API = "https://api.qase.io/v1"
