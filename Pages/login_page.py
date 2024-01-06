@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from Configurations import config
 from Pages.base_page import BasePage
+from logger import logger
 
 
 class LoginPage(BasePage):
@@ -17,14 +18,13 @@ class LoginPage(BasePage):
         super().__init__(driver)
 
     def go_to(self):
-        print("Navigating to:", config.BASE_URL)
+        logger.info(f"Navigating to: {config.BASE_URL}")
         self.driver.get(config.BASE_URL)
 
     def get_login_title(self, title):
         return self.get_title(title)
 
     def do_login(self, username, password):
-        print(self.driver)
         self.go_to()
         self.send_text(LoginPage.EMAIL, username)
         self.send_text(LoginPage.PASSWORD, password)

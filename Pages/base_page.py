@@ -1,9 +1,10 @@
 import pytest
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, JavascriptException, NoSuchWindowException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from Configurations import config
+from logger import logger
 
 
 @pytest.mark.usefixtures("init_driver")
@@ -44,15 +45,17 @@ class BasePage:
     def execute_javascript(self, js_script):
         try:
             self.driver.execute_script(js_script)
+        except JavascriptException as js_exception:
+            logger.error(js_exception)
         except Exception as e:
-            print("Error executing JavaScript:", e)
+            logger.error(e)
 
-    def get_title(self, title) -> str:
+    def get_title(self, title: str) -> str:
         """Returns the title of the page"""
         try:
             self.wait.until(EC.title_is(title))
         except TimeoutException:
-            print("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
+            logger.error("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
         return self.driver.title
 
     def is_visible(self, locator) -> bool:
@@ -87,12 +90,15 @@ class BasePage:
                 self.driver.switch_to.window(window_handle)
                 break
 
-    def switch_window(self, index):
+    def switch_window(self, index: int):
         try:
             self.driver.switch_to.window(self.driver.window_handles[index])
+        except IndexError as index_error:
+            logger.error(index_error)
+        except NoSuchWindowException as no_such_window_exception:
+            logger.error(no_such_window_exception)
         except Exception as e:
-            print("Error when switching browser window")
-            print(e)
+            logger.error(e)
 
     def close_current_tab(self):
         self.driver.close()
