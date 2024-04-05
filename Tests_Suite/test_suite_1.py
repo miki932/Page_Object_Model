@@ -1,7 +1,7 @@
 import pytest
 from Tests import test_home_page as thp
 from Tests import test_login_page as tlp
-from logger import logger
+from log_file import logger
 
 
 class TestSuiteBuyFlow:

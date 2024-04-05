@@ -1,6 +1,9 @@
+import logging
 from Pages.login_page import LoginPage
 from Configurations import config
-from logger import logger
+
+
+logger = logging.getLogger(__name__)
 
 
 class TestLogin:

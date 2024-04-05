@@ -1,7 +1,10 @@
+import logging
 from selenium.webdriver.common.by import By
 from Configurations import config
 from Pages.base_page import BasePage
-from logger import logger
+
+
+logger = logging.getLogger(__name__)
 
 
 class LoginPage(BasePage):

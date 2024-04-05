@@ -4,7 +4,10 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from Configurations import config
-from logger import logger
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 @pytest.mark.usefixtures("init_driver")
@@ -21,7 +24,7 @@ class BasePage:
     def get_element(self, locator):
         self.wait.until(EC.visibility_of_element_located(locator))
         element = self.driver.find_element(*locator)
-        return element.text
+        return element
 
     def click(self, locator):
         self.wait.until(EC.element_to_be_clickable(locator)).click()
@@ -43,20 +46,20 @@ class BasePage:
         hover.perform()
 
     def execute_javascript(self, js_script):
+        """Executes JavaScript in the current window/frame."""
         try:
             self.driver.execute_script(js_script)
-        except JavascriptException as js_exception:
-            logger.error(js_exception)
-        except Exception as e:
-            logger.error(e)
+        except JavascriptException:
+            logger.exception("Failed to execute JavaScript.")
+            raise
 
     def get_title(self, title: str) -> str:
         """Returns the title of the page"""
         try:
             self.wait.until(EC.title_is(title))
+            return self.driver.title
         except TimeoutException:
             logger.error("ERROR: ELEMENT NOT FOUND WITHIN GIVEN TIME")
-        return self.driver.title
 
     def is_visible(self, locator) -> bool:
         element = self.wait.until(EC.visibility_of_element_located(locator))
@@ -64,9 +67,6 @@ class BasePage:
 
     def get_url(self) -> str:
         return self.driver.current_url
-
-    def get_element_attr(self):
-        pass
 
     def is_link_work(self, url):
         url_exists = self.wait.until(EC.url_to_be(url))
@@ -114,7 +114,7 @@ class BasePage:
             )
         return alert_text
 
-    def dismiss_alert(self, text):
+    def dismiss_alert(self, text=""):
         alert = self.driver.switch_to.alert
         alert_text = alert.text
         if text in alert_text:
@@ -141,11 +141,8 @@ class BasePage:
 
 
 """
-    # TODO: custom logger.
     # TODO: get element func.
-    # TODO: TestPlan management integration.
     # TODO: Wrap all in Docker.
     # TODO: Run test in parallel.
-    # TODO: Allure integration.
     # TODO: Pytest - Separate to regression/sanity etc.
 """

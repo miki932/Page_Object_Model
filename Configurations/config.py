@@ -1,6 +1,5 @@
 import os
 
-
 # You should insert here your private credentials,
 # Notice: Do not upload secret information to GitHub ! Be careful !
 BASE_URL = "https://www.saucedemo.com/"
@@ -17,6 +16,3 @@ TITLE = "Swag Labs"
 SAUCE_USERNAME = ""
 SAUCE_ACCESS_KEY = ""
 PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# QASE API
-URL_API = "https://api.qase.io/v1"
