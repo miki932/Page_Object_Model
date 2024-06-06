@@ -1,17 +1,27 @@
-# Use an official Python runtime as a parent image
-FROM notarize/selenium-chrome:2.0.114.0-20230615
+# Use the official Python image with multi-arch support from the Docker Hub
+FROM python:3.9-slim
 
-# Set the working directory to /app
+# Install necessary packages and Firefox
+RUN apt-get update && \
+    apt-get install -y \
+    firefox-esr && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+
+# Set the working directory
 WORKDIR /app
 
-# Copy the entire project into the container at the working directory
-COPY . .
+# Copy the requirements file
+COPY requirements.txt /app/
 
-# Install any needed packages specified in requirements.txt
+# Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Copy the rest of the application
+COPY . /app
 
-# Run the test suite when the container launches
+# Ensure commands run within the virtual environment
 CMD ["pytest", "Tests_Suite/test_suite_2.py", "--browser", "headless"]
