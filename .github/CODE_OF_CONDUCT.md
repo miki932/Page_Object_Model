@@ -1,3 +1,1 @@
-אין פזמון תרקדו
-
-No chorus, dance !
+אין פזמון תרקדו! - !No chorus, dance
