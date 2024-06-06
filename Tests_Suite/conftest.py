@@ -68,23 +68,22 @@ def init_driver(request):
                 service=Service(executable_path=ChromeDriverManager().install()),
                 options=options,
             )
-
-        elif browser == "headless":
-            options = Firefox_Options()
-            options.add_argument("--disable-gpu")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--headless")
-            driver = webdriver.Firefox(
-                service=Service(GeckoDriverManager().install()),
-                options=options,
-            )
-
         elif browser == "firefox":
             options = Firefox_Options()
             driver = webdriver.Firefox(
                 service=Service(executable_path=GeckoDriverManager().install()),
                 options=options,
             )
+        elif browser == "headless":
+            options = Firefox_Options()
+            options.add_argument("--disable-gpu")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--headless")
+            driver = webdriver.Firefox(
+                service=Service(executable_path=GeckoDriverManager().install()),
+                options=options,
+            )
+
         print(f"before yield {driver =}")
         yield driver
         print(f"{driver =}")
