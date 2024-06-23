@@ -1,30 +1,41 @@
-# To execute this docker-compose file
-# use `docker-compose -f <file_name> up -d`
-
-version: "3.9"
+version: '3'
 services:
   selenium-hub:
-    image: selenium/hub:latest
+    image: selenium/hub:4.1.2-20220217
     container_name: selenium-hub
     ports:
       - "4444:4444"
 
   chrome:
-    image: selenium/node-chrome-debug:latest
-    volumes:
-      - /dev/shm:/dev/shm
+    build:
+      context: .
+      dockerfile: Dockerfile.chrome
+    ports:
+      - "5900:5900"  # Expose VNC port for Chrome
     depends_on:
       - selenium-hub
     environment:
+      - BROWSER=chrome
       - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
 
   firefox:
-    image: selenium/node-firefox-debug:latest
-    volumes:
-      - /dev/shm:/dev/shm
+    build:
+      context: .
+      dockerfile: Dockerfile.firefox
+    ports:
+      - "5901:5900"  # Expose VNC port for Firefox
     depends_on:
       - selenium-hub
     environment:
+      - BROWSER=firefox
       - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+
+  firefox-headless:
+    build:
+      context: .
+      dockerfile: Dockerfile.headless
+    depends_on:
+      - selenium-hub
+    environment:
+      - BROWSER=headless
+      - HUB_HOST=selenium-hub

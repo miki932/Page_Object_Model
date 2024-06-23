@@ -1,4 +1,4 @@
-# Use the official Python image with multi-arch support from the Docker Hub
+# Official Python image with multi-arch support
 FROM python:3.9-slim
 
 # Install necessary packages and Firefox

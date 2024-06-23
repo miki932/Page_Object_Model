@@ -1,0 +1,36 @@
+# Dockerfile.firefox
+FROM python:3.9-slim
+
+# Install necessary packages and Firefox
+RUN apt-get update && \
+    apt-get install -y \
+    firefox-esr \
+    x11vnc \
+    xvfb \
+    wget \
+    fluxbox && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create the .vnc directory and set VNC password
+RUN mkdir -p /root/.vnc && \
+    x11vnc -storepasswd yourpassword /root/.vnc/passwd
+
+# Set environment variables
+ENV DISPLAY=:99
+ENV PYTHONUNBUFFERED=1
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the requirements file
+COPY requirements.txt /app/
+
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
+COPY . /app
+
+# Start Xvfb and x11vnc
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1920x1080x16 & fluxbox & x11vnc -forever -usepw -rfbauth /root/.vnc/passwd -create & pytest Tests_Suite/test_suite_2.py --browser firefox"]
